@@ -429,7 +429,7 @@ PrefabInstance:
     - target: {fileID: 3064625661714062708, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.10420276
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3064625661714062708, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
@@ -439,7 +439,7 @@ PrefabInstance:
     - target: {fileID: 3064625661714062708, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.35401627
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3064625661714062708, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
@@ -480,6 +480,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerGalaxy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7326187382199429142, guid: 90300d788e885d846a713f01a3dbb216,
+        type: 3}
+      propertyPath: crouchMaxSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90300d788e885d846a713f01a3dbb216, type: 3}
@@ -689,7 +694,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -840037777384891287, guid: 110b3e7aead611a459c6fcf6f8871428, type: 3}
+  - {fileID: 2100000, guid: 7c9a47c0b08fd854797b124352c757e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

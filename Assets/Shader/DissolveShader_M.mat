@@ -39,11 +39,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Auto: 0
+    - _Auto: 1
     - _AutoDissolveSpeed: 1
     - _DissolveNoise: 100
     - _DissolveSpeed: 1
-    - _ManualDissolve: 0.348
+    - _ManualDissolve: 0.553
     m_Colors:
     - _Color: {r: 0.40784314, g: 1.7568628, b: 1.4352942, a: 1}
   m_BuildTextureStacks: []

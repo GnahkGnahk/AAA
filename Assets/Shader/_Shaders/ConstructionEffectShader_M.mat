@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 311a4d6fba1e76e4ba01404b54d0c16f, type: 3}
+        m_Texture: {fileID: 8400000, guid: c7fd0135223e405458b994448e48e008, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ProgressTexture:
@@ -47,5 +47,5 @@ Material:
     - _Progress: 1
     - _Segments: 1000
     m_Colors:
-    - _HeadColor: {r: 2.1185474, g: 1.9743531, b: 0, a: 0}
+    - _HeadColor: {r: 2.828427, g: 2.6359165, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -7,26 +7,44 @@ public class PlayerAnimation : Singleton<PlayerAnimation>
 {
     [SerializeField] Animator animatorController;
 
-    public void Move(bool isIdle = false, bool isStandardWalk = false, bool isRunning = false)
+    public void Move(bool isIdle = false, bool isCrouchedWalk = false, bool isStandardWalk = false, bool isRun = false)
     {
-        animatorController.SetBool("StandardWalk", isStandardWalk);
         animatorController.SetBool("Idle", isIdle);
+        animatorController.SetBool("CrouchedWalk", isCrouchedWalk);
+        animatorController.SetBool("StandardWalk", isStandardWalk);
+        animatorController.SetBool("Run", isRun);
     }
 
     public void Jump()
     {
         if (animatorController.GetBool("Idle"))
         {
-            Debug.Log("Jump from idle");
+            //Debug.Log("Jump from idle");
             animatorController.SetTrigger("JumpFromIdle");
             return;
         }
 
         if (animatorController.GetBool("StandardWalk"))
         {
-            Debug.Log("Jump from StandardWalk");
-            animatorController.SetTrigger("JumpFromRunning");
+            //Debug.Log("Jump from StandardWalk");
+            animatorController.SetTrigger("JumpFromMoving");
             return;
         }
+        if (animatorController.GetBool("Run"))
+        {
+            //Debug.Log("Jump from Run");
+            animatorController.SetTrigger("JumpFromMoving");
+            return;
+        }
+    }
+
+    public Animator GetAnimatorController()
+    {
+        return animatorController;
+    }
+
+    public void FallFlat()
+    {
+        animatorController.SetTrigger("FallFlat");
     }
 }

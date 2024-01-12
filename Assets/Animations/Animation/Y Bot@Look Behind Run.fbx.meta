@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 110b3e7aead611a459c6fcf6f8871428
+guid: f566f2a22a63ced49ba920a678fcd72c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpingFromIdle
+      name: Look Behind Run
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 113
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -56,23 +56,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.6261682
-        functionName: AdjustPlayerCollider
-        data: 
-        objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.77776337
-        functionName: ResetColliderPlayer
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 62f0cc80bd47f5149bfa34ea62761210,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
