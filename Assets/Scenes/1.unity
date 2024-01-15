@@ -484,7 +484,7 @@ PrefabInstance:
     - target: {fileID: 7326187382199429142, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
       propertyPath: crouchMaxSpeed
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90300d788e885d846a713f01a3dbb216, type: 3}

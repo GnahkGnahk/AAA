@@ -47,4 +47,28 @@ public class PlayerAnimation : Singleton<PlayerAnimation>
     {
         animatorController.SetTrigger("FallFlat");
     }
+
+    public void PickItem(PickUpType pickUpType)
+    {
+        Debug.Log("Choice: " +  pickUpType);
+        switch (pickUpType)
+        {
+            case PickUpType.HIGH:
+                animatorController.SetTrigger("PickHigh");
+                break;
+            case PickUpType.NORMAL:
+                animatorController.SetTrigger("PickNormal");
+                break;
+            case PickUpType.GROUND:
+                animatorController.SetTrigger("PickGround");
+                break;
+        }
+    }
+}
+
+public enum PickUpType
+{
+    GROUND,
+    NORMAL,
+    HIGH
 }

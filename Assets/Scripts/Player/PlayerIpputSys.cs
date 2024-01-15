@@ -13,7 +13,8 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     internal PlayerInput playerInput;
     internal Vector2 inputVector;
     internal PlayerAnimation playerAnimationInstance;
-    internal float rotationAngle = -20f;
+    internal float rotationAngle_Run = -20f, rotationAngle_Crouch = 20f;
+    bool isPickingItem = false, isJumping = false, isMoving = false;
     
     bool isCrouching = false;
 
@@ -34,10 +35,24 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         playerInput.Player.Crouch.performed += Crouch;
         playerInput.Player.Crouch.canceled += UnCrouch;
         playerInput.Player.Movement.performed += Rotation;
+        playerInput.Player.Interact.performed += PickUpItem;
+    }
+
+    private void PickUpItem(InputAction.CallbackContext obj)
+    {
+        if (isPickingItem) { return;}
+        if (isMoving) return;
+
+        int choiceTemp = Random.Range(0, 3);
+        Debug.Log(choiceTemp);
+        playerAnimationInstance.PickItem((PickUpType)choiceTemp);
+        isPickingItem = true;
     }
 
     private void Rotation(InputAction.CallbackContext obj)
     {
+        if (isPickingItem) { return;}
+
         Vector2 moveDir =  obj.ReadValue<Vector2>();
         transform.forward = new Vector3(moveDir.x, 0, moveDir.y);
     }
@@ -58,18 +73,24 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
     void Animation()
     {
+        if (isPickingItem) { return;}
+
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             float manitude = (playerRigidbody.velocity.magnitude);
             if (manitude == 0)
             {
                 //Debug.Log("Idle");
+                ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);
                 playerAnimationInstance.Move(isIdle: true);
+                isMoving = false;
             }
             else if (isCrouching)
             {
                 //Debug.Log("Crouch");
+                ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle_Crouch, 0f);
                 playerAnimationInstance.Move(isCrouchedWalk: isCrouching);
+                isMoving = true;
             }
             else if (manitude <= walkMaxSpeed)
             {
@@ -77,12 +98,14 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
                 ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
                 playerAnimationInstance.Move(isStandardWalk: true);
+                isMoving = true;
             }
             else
             {
                 //Debug.Log("Run: " + manitude);
-                ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle, 0f);
+                ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle_Run, 0f);
                 playerAnimationInstance.Move(isRun: true);
+                isMoving = true;
             }
         }
         else
@@ -91,8 +114,10 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         }
     }
 
-    void Move()
+    void Move() //  Add Force
     {
+        if (isPickingItem) { return;}
+
         inputVector = playerInput.Player.Movement.ReadValue<Vector2>().normalized;
 
         if (groundCheck.isGrounded)
@@ -110,16 +135,20 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
                 Debug.Log("walking ");
                 playerRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y) * speed, ForceMode.Force);
             }
+
         }
     }
 
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isPickingItem) {return;}
+
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             playerAnimationInstance.Jump();
             playerRigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+            isJumping = true;
         }
     }
     public void Crouch(InputAction.CallbackContext context)
@@ -137,7 +166,15 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         }
     }
 
+    void DisableSomeInput()
+    {
+        playerInput.Player.Movement.Disable();
+    }
 
+    void EnableSomeInput()
+    {
+        playerInput.Player.Movement.Enable();
+    }
 
     //=======================================================================================
     //===================================      Geter      ===================================
@@ -179,7 +216,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     //=======================================================================================
     //=================================== Animation event ===================================
     //=======================================================================================
-    void AdjustPlayerCollider()
+    void AdjustPlayerCollider() // For jump
     {
         Debug.Log("AdjustPlayerCollider");
         playerCapsuleCollider.height = playerHeight_Jump;
@@ -198,5 +235,17 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         playerInput.Player.Disable();
         playerCapsuleCollider.height = 0.1f;
         playerCapsuleCollider.radius = 0.1f;
+    }
+
+    void JumpDone()
+    {
+        Debug.Log("Jump Done");
+        isJumping = false;
+    }
+    void PickUpDone()
+    {
+        Debug.Log("Pick up Done");
+        isPickingItem = false;
+        EnableSomeInput();
     }
 }

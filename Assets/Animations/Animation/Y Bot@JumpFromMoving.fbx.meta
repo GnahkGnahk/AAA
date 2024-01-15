@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpFromRunning
+      name: JumpFromMoving
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
@@ -67,6 +67,14 @@ ModelImporter:
         messageOptions: 0
       - time: 0.620297
         functionName: ResetColliderPlayer
+        data: 
+        objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9981309
+        functionName: JumpDone
         data: 
         objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
           type: 3}
