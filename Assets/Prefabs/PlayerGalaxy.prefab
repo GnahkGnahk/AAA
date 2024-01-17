@@ -5162,13 +5162,16 @@ MonoBehaviour:
   playerRigidbody: {fileID: 1031861406497321242}
   force: 6
   speed: 7
-  runMaxSpeed: 9
-  walkMaxSpeed: 2
+  runMaxSpeed: 8
+  walkMaxSpeed: 1.5
+  crouchMaxSpeed: 0.8
   groundCheck: {fileID: 825863329172445152}
   playerCapsuleCollider: {fileID: 815108398506263825}
   ModelPlayer: {fileID: 3246257160892031916}
   playerHeight_Idle: 1.8
   playerHeight_Jump: 1.4
+  playerRadius_Idle: 0.3
+  playerRadius_Laid: 0.1
 --- !u!114 &5900477138478494681
 MonoBehaviour:
   m_ObjectHideFlags: 0

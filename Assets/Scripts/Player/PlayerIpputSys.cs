@@ -60,6 +60,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     {
         Move();
         Animation();
+        Debug.Log("magnitude " + playerRigidbody.velocity.magnitude);
     }
 
     private void Update()
@@ -73,7 +74,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
     void Animation()
     {
-        if (isPickingItem) { return;}
+        if (isPickingItem) { return; }
 
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
@@ -149,6 +150,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
             playerAnimationInstance.Jump();
             playerRigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
             isJumping = true;
+            isMoving = false;
         }
     }
     public void Crouch(InputAction.CallbackContext context)
