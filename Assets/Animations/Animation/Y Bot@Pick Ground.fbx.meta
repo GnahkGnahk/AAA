@@ -57,6 +57,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.13794471
+        functionName: AdjustPlayerColliderPickUpGround
+        data: 
+        objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.82692194
+        functionName: ResetColliderPlayer
+        data: 
+        objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.99579424
         functionName: PickUpDone
         data: 

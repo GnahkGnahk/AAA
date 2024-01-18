@@ -18,7 +18,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     
     bool isCrouching = false;
 
-    public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f;
+    public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 1f, playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f;
     private void Start()
     {
         playerAnimationInstance = PlayerAnimation.Instance;
@@ -60,7 +60,6 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     {
         Move();
         Animation();
-        Debug.Log("magnitude " + playerRigidbody.velocity.magnitude);
     }
 
     private void Update()
@@ -75,6 +74,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     void Animation()
     {
         if (isPickingItem) { return; }
+        if (isJumping) { return; }
 
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
@@ -123,6 +123,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
         if (groundCheck.isGrounded)
         {
+            //Debug.Log("Can add force ");
             if (isCrouching)
             {
                 if (Mathf.Round(playerRigidbody.velocity.magnitude) < crouchMaxSpeed)
@@ -133,7 +134,6 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
             }
             if (Mathf.Round(playerRigidbody.velocity.magnitude) < runMaxSpeed)
             {
-                Debug.Log("walking ");
                 playerRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y) * speed, ForceMode.Force);
             }
 
@@ -218,9 +218,9 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     //=======================================================================================
     //=================================== Animation event ===================================
     //=======================================================================================
-    void AdjustPlayerCollider() // For jump
+    void AdjustPlayerColliderJump() // For jump
     {
-        Debug.Log("AdjustPlayerCollider");
+        Debug.Log("AdjustPlayerColliderJump");
         playerCapsuleCollider.height = playerHeight_Jump;
         playerRigidbody.velocity /= 2;
     }
@@ -229,6 +229,11 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         Debug.Log("ResetColliderPlayer");
         playerCapsuleCollider.height = playerHeight_Idle;
         playerCapsuleCollider.radius = playerRadius_Idle;
+    }
+    void AdjustPlayerColliderPickUpGround()
+    {
+        Debug.Log("AdjustPlayerColliderPickUpGround");
+        playerCapsuleCollider.height = playerHeight_PickUpGround;
     }
 
     void FallFlatEvent()
@@ -248,6 +253,5 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     {
         Debug.Log("Pick up Done");
         isPickingItem = false;
-        EnableSomeInput();
     }
 }
