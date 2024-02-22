@@ -144,8 +144,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     public void Jump(InputAction.CallbackContext context)
     {
         if (isPickingItem) {return;}
-
-        if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
+        if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             playerAnimationInstance.Jump();
             playerRigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
