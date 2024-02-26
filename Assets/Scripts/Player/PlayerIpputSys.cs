@@ -123,6 +123,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
         if (groundCheck.isGrounded)
         {
+            //Debug.Log("inputVector: " + inputVector);
             //Debug.Log("Can add force ");
             if (isCrouching)
             {

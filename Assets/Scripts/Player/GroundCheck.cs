@@ -10,10 +10,18 @@ public class GroundCheck : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        isGrounded = collision != null && (((1 << collision.gameObject.layer) & platformLayerMask) != 0);
+        if (collision.gameObject.layer == Helper.TAG_PLATFORM)
+        {
+            isGrounded = true;
+            Debug.Log("Stay: " + isGrounded);
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
-        isGrounded = false;
+        if (collision.gameObject.layer == Helper.TAG_PLATFORM)
+        {
+            isGrounded = false;
+            Debug.Log("Exit : " + isGrounded);
+        }
     }
 }

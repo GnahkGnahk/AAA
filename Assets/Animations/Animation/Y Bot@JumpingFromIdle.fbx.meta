@@ -60,8 +60,7 @@ ModelImporter:
       - time: 0.6261682
         functionName: AdjustPlayerColliderJump
         data: 
-        objectReferenceParameter: {fileID: 3064625661714062711, guid: 90300d788e885d846a713f01a3dbb216,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -70,6 +69,13 @@ ModelImporter:
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 62f0cc80bd47f5149bfa34ea62761210,
           type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9972568
+        functionName: JumpDone
+        data: 
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
