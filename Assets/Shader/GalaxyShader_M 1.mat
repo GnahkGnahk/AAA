@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GalaxyShader_M 1
+  m_Shader: {fileID: -6465566751694194690, guid: b03d06b3af2132c4a874bb07d8388b28,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Galaxy:
+        m_Texture: {fileID: 8900000, guid: 2d62f60de7eb10043be21c5003c555dc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Star:
+        m_Texture: {fileID: 8900000, guid: 24e61d396ea2eeb4bb4d9077c5cbf096, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _FresnelNoisePower: 1
+    - _FresnelPower: 0
+    - _FresnelScale: 20
+    - _FresnelSpeed: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    m_Colors:
+    - _FresnalColor: {r: 0.00030612946, g: 0, b: 1, a: 1}
+    - _FresnelSpeed: {r: 0, g: 0.2, b: 0, a: 0}
+    - _GalaxyColor: {r: 2.782665, g: 2.782665, b: 2.782665, a: 0}
+    - _StarColor: {r: 46.329166, g: 28.076992, b: 2.403872, a: 0}
+    - _StarOffet: {r: 0.2, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &3247819336314835172
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
