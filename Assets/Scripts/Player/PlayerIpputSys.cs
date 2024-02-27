@@ -79,7 +79,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             float manitude = (playerRigidbody.velocity.magnitude);
-            if (manitude == 0)
+            if (manitude < 0.1f)
             {
                 //Debug.Log("Idle");
                 ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);

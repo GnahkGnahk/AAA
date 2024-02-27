@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Helper
 {
-    public const int TAG_PLATFORM = 9;
+    public const int LAYER_PLATFORM = 9;
 }
