@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerIpputSys : Singleton<PlayerIpputSys>
 {
     [SerializeField] Rigidbody playerRigidbody;
-    [SerializeField] float force, speed, runMaxSpeed, walkMaxSpeed, crouchMaxSpeed;
+    [SerializeField] float force, speed, runMaxSpeed, walkMaxSpeed, crouchMaxSpeed, rotationSpeed;
     [SerializeField] GroundCheck groundCheck;
     [SerializeField] CapsuleCollider playerCapsuleCollider;
     [SerializeField] Transform ModelPlayer;
@@ -17,6 +17,9 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     bool isPickingItem = false, isJumping = false, isMoving = false;
     
     bool isCrouching = false;
+    bool isRotate = false;
+
+    Quaternion targetRotation;
 
     public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 1f, playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f;
     private void Start()
@@ -34,7 +37,8 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         playerInput.Player.Jump.performed += Jump;
         playerInput.Player.Crouch.performed += Crouch;
         playerInput.Player.Crouch.canceled += UnCrouch;
-        playerInput.Player.Movement.performed += Rotation;
+        playerInput.Player.Movement.performed += RotationPerformed;
+        playerInput.Player.Movement.canceled += RotationCanceled;
         playerInput.Player.Interact.performed += PickUpItem;
     }
 
@@ -49,17 +53,32 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         isPickingItem = true;
     }
 
-    private void Rotation(InputAction.CallbackContext obj)
+    private void RotationPerformed(InputAction.CallbackContext obj)
     {
-        if (isPickingItem) { return;}
+        if (isPickingItem) { return; }
 
-        Vector2 moveDir =  obj.ReadValue<Vector2>();
-        transform.forward = new Vector3(moveDir.x, 0, moveDir.y);
+        Vector2 moveDir = obj.ReadValue<Vector2>();
+
+        if (moveDir.magnitude > 0.1f)
+        {
+            targetRotation = Quaternion.LookRotation(new Vector3(moveDir.x, 0, moveDir.y), Vector3.up);
+        }
+        isRotate = true;
+    }
+    private void RotationCanceled(InputAction.CallbackContext obj)
+    {
+        isRotate = false;
+    }
+    void Rotate()
+    {
+        if (!isRotate) return;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     private void FixedUpdate()
     {
         Move();
         Animation();
+        Rotate();
     }
 
     private void Update()
