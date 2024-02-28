@@ -747,7 +747,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -1170,6 +1170,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7326187382199429142, guid: 90300d788e885d846a713f01a3dbb216,
+        type: 3}
+      propertyPath: CM_TopDown
+      value: 
+      objectReference: {fileID: 515351785}
+    - target: {fileID: 7326187382199429142, guid: 90300d788e885d846a713f01a3dbb216,
+        type: 3}
+      propertyPath: CM_Crouching
+      value: 
+      objectReference: {fileID: 683691613}
+    - target: {fileID: 7326187382199429142, guid: 90300d788e885d846a713f01a3dbb216,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7590991773275826447, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
       propertyPath: m_Layer
@@ -1369,7 +1384,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
+  m_CustomBlends: {fileID: 11400000, guid: d9e45235191d53b48add4d8e08efc774, type: 2}
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []

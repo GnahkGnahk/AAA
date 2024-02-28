@@ -1,4 +1,6 @@
-﻿using UnityEditor.Rendering.LookDev;
+﻿using Cinemachine;
+using System.Collections;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +11,8 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     [SerializeField] GroundCheck groundCheck;
     [SerializeField] CapsuleCollider playerCapsuleCollider;
     [SerializeField] Transform ModelPlayer;
+
+    [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
 
     internal PlayerInput playerInput;
     internal Vector2 inputVector;
@@ -44,41 +48,55 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
     private void PickUpItem(InputAction.CallbackContext obj)
     {
-        if (isPickingItem) { return;}
-        if (isMoving) return;
+        if (isPickingItem || isMoving) return;
 
         int choiceTemp = Random.Range(0, 3);
         Debug.Log(choiceTemp);
         playerAnimationInstance.PickItem((PickUpType)choiceTemp);
         isPickingItem = true;
+        playerInput.Player.Movement.Disable();
     }
 
+    Coroutine rotateCoroutine;
+    Vector3 targetDirection;
     private void RotationPerformed(InputAction.CallbackContext obj)
     {
-        if (isPickingItem) { return; }
-
+        Debug.Log("RotationPerformed");
         Vector2 moveDir = obj.ReadValue<Vector2>();
-
         if (moveDir.magnitude > 0.1f)
         {
-            targetRotation = Quaternion.LookRotation(new Vector3(moveDir.x, 0, moveDir.y), Vector3.up);
+            targetDirection = new Vector3(moveDir.x, 0, moveDir.y);
+            if (!isRotate)
+            {
+                isRotate = true;
+                rotateCoroutine = StartCoroutine(RotateCoroutine());
+            }
         }
-        isRotate = true;
     }
+
     private void RotationCanceled(InputAction.CallbackContext obj)
     {
         isRotate = false;
+        if (rotateCoroutine != null)
+        {
+            StopCoroutine(rotateCoroutine);
+        }
     }
-    void Rotate()
+
+    private IEnumerator RotateCoroutine()
     {
-        if (!isRotate) return;
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        while (true)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
+
     private void FixedUpdate()
     {
         Move();
         Animation();
-        Rotate();
     }
 
     private void Update()
@@ -92,8 +110,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
 
     void Animation()
     {
-        if (isPickingItem) { return; }
-        if (isJumping) { return; }
+        if (isPickingItem || isJumping) { return; }
 
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
@@ -177,6 +194,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             isCrouching = true;
+            CM_Crouching.Priority = 99;
         }
     }
     public void UnCrouch(InputAction.CallbackContext context)
@@ -184,6 +202,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             isCrouching = false;
+            CM_Crouching.Priority = 1;
         }
     }
 
@@ -271,6 +290,7 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
     void PickUpDone()
     {
         Debug.Log("Pick up Done");
-        isPickingItem = false;
+        isPickingItem = false;;
+        playerInput.Player.Movement.Enable();
     }
 }
