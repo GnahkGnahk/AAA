@@ -65,10 +65,3 @@ public class PlayerAnimation : Singleton<PlayerAnimation>
         }
     }
 }
-
-public enum PickUpType
-{
-    GROUND,
-    NORMAL,
-    HIGH
-}
