@@ -1,24 +1,15 @@
-﻿using Cinemachine;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.LookDev;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerIpputSys : Singleton<PlayerIpputSys>
+public class PlayerInputSys : Singleton<PlayerInputSys>
 {
     internal PlayerInput playerInput;
     internal Vector2 inputVector;
 
     internal PlayerManager playerManager_Instance;
-
-    private void Start()
+    protected override void Awake()
     {
-        playerManager_Instance = PlayerManager.Instance;
-    }
-
-    private void Awake()
-    {
+        base.Awake();
         playerInput = new();
         playerInput.Player.Enable();
         playerInput.Player.Jump.performed += Jump;
@@ -27,6 +18,10 @@ public class PlayerIpputSys : Singleton<PlayerIpputSys>
         playerInput.Player.Movement.performed += RotationPerformed;
         playerInput.Player.Movement.canceled += RotationCanceled;
         playerInput.Player.Interact.performed += PickUpItem;
+    }
+    private void Start()
+    {
+        playerManager_Instance = PlayerManager.Instance;
     }
 
     private void PickUpItem(InputAction.CallbackContext obj)
