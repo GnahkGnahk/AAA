@@ -11,9 +11,18 @@ public class Helper
     //====================================================================== ANIMATOR
     public const string ANIMATOR_VELOCITY = "Velocity";
 
+    public const string ANIMATOR_IDLE = "Idle";
+
+    public const string ANIMATOR_JUMP_FROM_IDLE = "JumpFromIdle";
+    public const string ANIMATOR_JUMP_FROM_MOVING = "JumpFromMoving";
+
+    public const string ANIMATOR_STANDARD_WALK = "StandardWalk";
+    public const string ANIMATOR_RUN = "Run";
+
     public const string ANIMATOR_PICK_HIGH = "PickHigh";
     public const string ANIMATOR_PICK_NORMAL = "PickNormal";
     public const string ANIMATOR_PICK_GROUND = "PickGround";
+
     public const string ANIMATOR_FALL_FLAT = "FallFlat";
 }
 

@@ -11,7 +11,35 @@ public class PlayerAnimationNew : Singleton<PlayerAnimationNew>
     {
         return animatorController;
     }
+    public void Jump()
+    {
+        if (animatorController.GetBool("Idle"))
+        {
+            //Debug.Log("Jump from idle");
+            animatorController.SetTrigger("JumpFromIdle");
+            return;
+        }
 
+        if (animatorController.GetBool("StandardWalk"))
+        {
+            //Debug.Log("Jump from StandardWalk");
+            animatorController.SetTrigger("JumpFromMoving");
+            return;
+        }
+        if (animatorController.GetBool("Run"))
+        {
+            //Debug.Log("Jump from Run");
+            animatorController.SetTrigger("JumpFromMoving");
+            return;
+        }
+    }
+    public void MoveBool(bool isIdle = false, bool isCrouchedWalk = false, bool isStandardWalk = false, bool isRun = false)
+    {
+        animatorController.SetBool("Idle", isIdle);
+        animatorController.SetBool("CrouchedWalk", isCrouchedWalk);
+        animatorController.SetBool("StandardWalk", isStandardWalk);
+        animatorController.SetBool("Run", isRun);
+    }
     public void MoveAnimation(float velocity)
     {
         animatorController.SetFloat(Helper.ANIMATOR_VELOCITY, velocity);

@@ -13,7 +13,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
 
-    internal PlayerAnimation p_Animation_Instance;
+    internal PlayerAnimationNew p_AnimationNew_Instance;
+    //internal PlayerAnimation p_Animation_Instance;
     internal PlayerInputSys p_InputSys_Instance;
     internal float rotationAngle_Run = -20f, rotationAngle_Crouch = 20f;
     internal bool isPickingItem = false, isJumping = false, isMoving = false;
@@ -29,7 +30,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void Start()
     {
-        p_Animation_Instance = PlayerAnimation.Instance;
+        p_AnimationNew_Instance = PlayerAnimationNew.Instance;
+        //p_Animation_Instance = PlayerAnimation.Instance;
         p_InputSys_Instance = PlayerInputSys.Instance;
 
         playerHeight_Idle = playerCapsuleCollider.height;
@@ -84,18 +86,19 @@ public class PlayerManager : Singleton<PlayerManager>
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
             float manitude = (playerRigidbody.velocity.magnitude);
+            p_AnimationNew_Instance.MoveAnimation(manitude);
             if (manitude < 0.1f)
             {
                 //Debug.Log("Idle");
                 ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                p_Animation_Instance.Move(isIdle: true);
+                p_AnimationNew_Instance.MoveBool(isIdle: true);
                 isMoving = false;
             }
             else if (isCrouching)
             {
                 //Debug.Log("Crouch");
                 ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle_Crouch, 0f);
-                p_Animation_Instance.Move(isCrouchedWalk: isCrouching);
+                p_AnimationNew_Instance.MoveBool(isCrouchedWalk: isCrouching);
                 isMoving = true;
             }
             else if (manitude <= walkMaxSpeed)
@@ -103,14 +106,14 @@ public class PlayerManager : Singleton<PlayerManager>
                 //Debug.Log("Walk");
                 ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
-                p_Animation_Instance.Move(isStandardWalk: true);
+                p_AnimationNew_Instance.MoveBool(isStandardWalk: true);
                 isMoving = true;
             }
             else
             {
                 //Debug.Log("Run: " + manitude);
                 ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle_Run, 0f);
-                p_Animation_Instance.Move(isRun: true);
+                p_AnimationNew_Instance.MoveBool(isRun: true);
                 isMoving = true;
             }
         }
@@ -126,7 +129,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         int choiceTemp = Random.Range(0, 3);
         Debug.Log(choiceTemp);
-        p_Animation_Instance.PickItem((PickUpType)choiceTemp);
+        p_AnimationNew_Instance.PickItem((PickUpType)choiceTemp);
         isPickingItem = true;
         p_InputSys_Instance.DisableMove();
     }
@@ -169,7 +172,7 @@ public class PlayerManager : Singleton<PlayerManager>
         if (isPickingItem) { return; }
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
-            p_Animation_Instance.Jump();
+            p_AnimationNew_Instance.Jump();
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
             isMoving = false;
