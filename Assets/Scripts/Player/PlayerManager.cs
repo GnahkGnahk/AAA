@@ -16,7 +16,7 @@ public class PlayerManager : Singleton<PlayerManager>
     internal PlayerAnimationNew p_AnimationNew_Instance;
     //internal PlayerAnimation p_Animation_Instance;
     internal PlayerInputSys p_InputSys_Instance;
-    internal float rotationAngle_Run = -20f, rotationAngle_Crouch = 20f;
+    internal float rotationAngle_Run = -30f, rotationAngle_Crouch = 20f;
     internal bool isPickingItem = false, isJumping = false, isMoving = false;
 
     internal bool isCrouching = false;
@@ -184,6 +184,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
+            AdjustPlayerColliderCrouch();
             isCrouching = true;
             CM_Crouching.Priority = 99;
         }
@@ -193,6 +194,8 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
+            ResetColliderPlayer();
+
             isCrouching = false;
             CM_Crouching.Priority = 1;
         }
