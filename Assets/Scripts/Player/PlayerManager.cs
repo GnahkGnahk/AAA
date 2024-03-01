@@ -87,6 +87,7 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             float manitude = (playerRigidbody.velocity.magnitude);
             p_AnimationNew_Instance.MoveAnimation(manitude);
+
             if (manitude < 0.1f)
             {
                 //Debug.Log("Idle");

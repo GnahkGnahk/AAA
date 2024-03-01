@@ -17,6 +17,7 @@ public class Helper
     public const string ANIMATOR_JUMP_FROM_MOVING = "JumpFromMoving";
 
     public const string ANIMATOR_STANDARD_WALK = "StandardWalk";
+    public const string ANIMATOR_CROUCH_WALK = "CrouchedWalk";
     public const string ANIMATOR_RUN = "Run";
 
     public const string ANIMATOR_PICK_HIGH = "PickHigh";
