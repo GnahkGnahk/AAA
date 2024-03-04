@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+using System;
 using UnityEngine;
 
 public class PlayerAnimationNew : Singleton<PlayerAnimationNew>
@@ -33,16 +31,17 @@ public class PlayerAnimationNew : Singleton<PlayerAnimationNew>
             return;
         }
     }
-    public void MoveBool(bool isIdle = false, bool isCrouchedWalk = false, bool isStandardWalk = false, bool isRun = false)
+    public void MoveBool(bool isIdle = false,bool isCrouchIdle = false, bool isCrouchedWalk = false, bool isStandardWalk = false, bool isRun = false)
     {
         animatorController.SetBool(Helper.ANIMATOR_IDLE, isIdle);
+        animatorController.SetBool(Helper.ANIMATOR_CROUCH_IDLE, isCrouchIdle);
         animatorController.SetBool(Helper.ANIMATOR_CROUCH_WALK, isCrouchedWalk);
         animatorController.SetBool(Helper.ANIMATOR_STANDARD_WALK, isStandardWalk);
         animatorController.SetBool(Helper.ANIMATOR_RUN, isRun);
     }
     public void MoveAnimation(float velocity)
     {
-        animatorController.SetFloat(Helper.ANIMATOR_VELOCITY, velocity);
+        animatorController.SetFloat(Helper.ANIMATOR_VELOCITY, (float)Math.Round(velocity, 1));
     }
 
     public void FallFlat()

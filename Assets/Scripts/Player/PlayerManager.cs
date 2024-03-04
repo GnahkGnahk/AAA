@@ -43,6 +43,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Move();
         Animation();
+        //Debug.Log("isCrouching: " + isCrouching + ", isMoving: " + isMoving);
     }
 
     private void Update()
@@ -90,6 +91,14 @@ public class PlayerManager : Singleton<PlayerManager>
 
             if (manitude < 0.1f)
             {
+                if (isCrouching && !isMoving)
+                {
+                    //Debug.Log("isCrouchIdle");
+                    ModelPlayer.localRotation = Quaternion.Euler(0f, rotationAngle_Crouch, 0f);
+                    p_AnimationNew_Instance.MoveBool(isCrouchIdle: isCrouching);
+                    p_AnimationNew_Instance.MoveAnimation(manitude);
+                    return;
+                }
                 //Debug.Log("Idle");
                 ModelPlayer.localRotation = Quaternion.Euler(0f, 0f, 0f);
                 p_AnimationNew_Instance.MoveBool(isIdle: true);
@@ -171,6 +180,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public void Jump()
     {
         if (isPickingItem) { return; }
+        if (isCrouching) { return; }
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             p_AnimationNew_Instance.Jump();
