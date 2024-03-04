@@ -26,7 +26,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 1f, playerHeight_Crouch = 1.5f,
         playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f,
-        playerCenter_Y = 0.8f;
+        playerCenter_Y_Idle = 0.9f, playerCenter_Y_Crouching = 0.75f;
 
     private void Start()
     {
@@ -256,6 +256,7 @@ public class PlayerManager : Singleton<PlayerManager>
         Debug.Log("ResetColliderPlayer");
         playerCapsuleCollider.height = playerHeight_Idle;
         playerCapsuleCollider.radius = playerRadius_Idle;
+        playerCapsuleCollider.center = new Vector3(playerCapsuleCollider.center.x, playerCenter_Y_Idle, playerCapsuleCollider.center.z);
     }
     void AdjustPlayerColliderJump() // For jump
     {
@@ -271,8 +272,8 @@ public class PlayerManager : Singleton<PlayerManager>
     void AdjustPlayerColliderCrouch() // For Crouch
     {
         Debug.Log("AdjustPlayerColliderCrouch");
-        playerCapsuleCollider.height = 1.5f;
-        playerCapsuleCollider.center = new Vector3(playerCapsuleCollider.center.x, 0.5f, playerCapsuleCollider.center.z);
+        playerCapsuleCollider.height = playerHeight_Crouch;
+        playerCapsuleCollider.center = new Vector3(playerCapsuleCollider.center.x, playerCenter_Y_Crouching, playerCapsuleCollider.center.z);
     }
 
     void FallFlatEvent()

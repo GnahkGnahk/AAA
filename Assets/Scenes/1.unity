@@ -677,46 +677,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9990483
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.043619405
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422306254429579484, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3064625661714062708, guid: 90300d788e885d846a713f01a3dbb216,
         type: 3}
       propertyPath: m_RootOrder
@@ -776,11 +736,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerGalaxy
-      objectReference: {fileID: 0}
-    - target: {fileID: 3372467955670689399, guid: 90300d788e885d846a713f01a3dbb216,
-        type: 3}
-      propertyPath: m_Lens.FieldOfView
-      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90300d788e885d846a713f01a3dbb216, type: 3}

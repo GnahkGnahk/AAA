@@ -5203,7 +5203,8 @@ MonoBehaviour:
   playerHeight_Crouch: 1.5
   playerRadius_Idle: 0.3
   playerRadius_Laid: 0.1
-  playerCenter_Y: 0.8
+  playerCenter_Y_Idle: 0.9
+  playerCenter_Y_Crouching: 0.75
 --- !u!114 &7326187382199429142
 MonoBehaviour:
   m_ObjectHideFlags: 0
