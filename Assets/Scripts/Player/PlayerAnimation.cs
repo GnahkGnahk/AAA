@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimation : Singleton<PlayerAnimation>
@@ -50,7 +47,7 @@ public class PlayerAnimation : Singleton<PlayerAnimation>
 
     public void PickItem(PickUpType pickUpType)
     {
-        Debug.Log("Choice: " + pickUpType);
+        Debug.Log("PickItem: " + pickUpType);
         switch (pickUpType)
         {
             case PickUpType.HIGH:

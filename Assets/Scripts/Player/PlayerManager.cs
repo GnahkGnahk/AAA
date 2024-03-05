@@ -138,7 +138,6 @@ public class PlayerManager : Singleton<PlayerManager>
         if (isPickingItem || isMoving) return;
 
         int choiceTemp = Random.Range(0, 3);
-        Debug.Log(choiceTemp);
         p_AnimationNew_Instance.PickItem((PickUpType)choiceTemp);
         isPickingItem = true;
         p_InputSys_Instance.DisableMove();
@@ -179,8 +178,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void Jump()
     {
+        Debug.Log("PressJump 1");
         if (isPickingItem) { return; }
         if (isCrouching) { return; }
+
+        Debug.Log("PressJump 2");
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             p_AnimationNew_Instance.Jump();

@@ -54,24 +54,12 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
         playerManager_Instance.UnCrouch();
     }
 
-    public Vector2 GetInputVector()
-    {
-        return playerInput.Player.Movement.ReadValue<Vector2>().normalized;
-    }
-    public void EnableMove()
-    {
-        playerInput.Player.Movement.Enable();
-    }
-    public void DisableMove()
-    {
-        playerInput.Player.Movement.Disable();
-    }
-    public void EnablePlayer()
-    {
-        playerInput.Player.Enable();
-    }
-    public void DisablePlayer()
-    {
-        playerInput.Player.Disable();
-    }
+    public Vector2 GetInputVector() => playerInput.Player.Movement.ReadValue<Vector2>().normalized;
+
+    public void EnableMove() => playerInput.Player.Movement.Enable();
+    public void DisableMove() => playerInput.Player.Movement.Disable();
+    public void EnableJump() => playerInput.Player.Jump.Enable();
+    public void DisableJump() => playerInput.Player.Jump.Disable();
+    public void EnablePlayer() => playerInput.Player.Enable();
+    public void DisablePlayer() => playerInput.Player.Disable();
 }
