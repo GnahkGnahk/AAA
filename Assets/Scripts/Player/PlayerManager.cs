@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
@@ -12,6 +13,8 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] Transform ModelPlayer;
 
     [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
+
+    [SerializeField] Text logStatus;
 
     internal PlayerAnimationNew p_AnimationNew_Instance;
     //internal PlayerAnimation p_Animation_Instance;
@@ -43,7 +46,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Move();
         Animation();
-        //Debug.Log("isCrouching: " + isCrouching + ", isMoving: " + isMoving);
+        logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching;
     }
 
     private void Update()
@@ -253,14 +256,14 @@ public class PlayerManager : Singleton<PlayerManager>
     //=======================================================================================
     void ResetColliderPlayer()
     {
-        Debug.Log("ResetColliderPlayer");
+        //Debug.Log("ResetColliderPlayer");
         playerCapsuleCollider.height = playerHeight_Idle;
         playerCapsuleCollider.radius = playerRadius_Idle;
         playerCapsuleCollider.center = new Vector3(playerCapsuleCollider.center.x, playerCenter_Y_Idle, playerCapsuleCollider.center.z);
     }
     void AdjustPlayerColliderJump() // For jump
     {
-        Debug.Log("AdjustPlayerColliderJump");
+        //Debug.Log("AdjustPlayerColliderJump");
         playerCapsuleCollider.height = playerHeight_Jump;
         playerRigidbody.velocity /= 2;
     }
