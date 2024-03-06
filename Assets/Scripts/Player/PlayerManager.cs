@@ -178,23 +178,22 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void Jump()
     {
-        Debug.Log("PressJump 1");
         if (isPickingItem) { return; }
         if (isCrouching) { return; }
 
-        Debug.Log("PressJump 2");
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             p_AnimationNew_Instance.Jump();
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
             isMoving = false;
+            p_InputSys_Instance.DisableJump();
         }
     }
 
     public void Crouch()
     {
-        if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
+        if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             AdjustPlayerColliderCrouch();
             isCrouching = true;
@@ -204,13 +203,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void UnCrouch()
     {
-        if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
-        {
-            ResetColliderPlayer();
+        if (!isCrouching){ return; }
 
-            isCrouching = false;
-            CM_Crouching.Priority = 1;
-        }
+        ResetColliderPlayer();
+
+        isCrouching = false;
+        CM_Crouching.Priority = 1;
     }
 
     //=======================================================================================
@@ -290,6 +288,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Debug.Log("Jump Done");
         isJumping = false;
+        p_InputSys_Instance.EnableJump();
     }
     void PickUpDone()
     {
