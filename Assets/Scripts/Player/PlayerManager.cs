@@ -1,7 +1,7 @@
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerManager : Singleton<PlayerManager>
@@ -17,8 +17,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] Text logStatus;
 
     internal PlayerAnimationNew p_AnimationNew_Instance;
-    //internal PlayerAnimation p_Animation_Instance;
     internal PlayerInputSys p_InputSys_Instance;
+    internal PlayerSwitchCharacter p_SwitchCharacter_Instance;
+
     internal float rotationAngle_Run = -30f, rotationAngle_Crouch = 20f;
     internal bool isPickingItem = false, isJumping = false, isMoving = false;
 
@@ -27,6 +28,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     Vector2 inputVector;
 
+    float manitude;
+
     public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 1f, playerHeight_Crouch = 1.5f,
         playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f,
         playerCenter_Y_Idle = 0.9f, playerCenter_Y_Crouching = 0.75f;
@@ -34,8 +37,8 @@ public class PlayerManager : Singleton<PlayerManager>
     private void Start()
     {
         p_AnimationNew_Instance = PlayerAnimationNew.Instance;
-        //p_Animation_Instance = PlayerAnimation.Instance;
         p_InputSys_Instance = PlayerInputSys.Instance;
+        p_SwitchCharacter_Instance = PlayerSwitchCharacter.Instance;
 
         playerHeight_Idle = playerCapsuleCollider.height;
         playerRadius_Idle = playerCapsuleCollider.radius;
@@ -46,7 +49,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Move();
         Animation();
-        logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching;
+        logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name;
     }
 
     private void Update()
@@ -82,14 +85,14 @@ public class PlayerManager : Singleton<PlayerManager>
 
         }
     }
-
+    
     void Animation()
     {
         if (isPickingItem || isJumping) { return; }
 
         if (groundCheck.isGrounded && Mathf.Floor(playerRigidbody.velocity.y) == 0)
         {
-            float manitude = (playerRigidbody.velocity.magnitude);
+            manitude = playerRigidbody.velocity.magnitude;
             p_AnimationNew_Instance.MoveAnimation(manitude);
 
             if (manitude < 0.1f)
@@ -138,7 +141,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void PickUpItem()
     {
-        if (isPickingItem || isMoving) return;
+        if (isPickingItem || isMoving || isJumping) return;
 
         int choiceTemp = Random.Range(0, 3);
         p_AnimationNew_Instance.PickItem((PickUpType)choiceTemp);
@@ -186,10 +189,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
+            logStatus.text += "\n\nJump press";
             p_AnimationNew_Instance.Jump();
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
-            isMoving = false;
+            if (manitude < 0.1f) isMoving = false;
             p_InputSys_Instance.DisableJump();
         }
     }
@@ -212,6 +216,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
         isCrouching = false;
         CM_Crouching.Priority = 1;
+    }
+
+    public void SwitchCharacter(int choice)
+    {
+        ModelPlayer = p_SwitchCharacter_Instance.SwitchCharacter(choice);
     }
 
     //=======================================================================================

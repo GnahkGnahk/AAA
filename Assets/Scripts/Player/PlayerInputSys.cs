@@ -13,6 +13,7 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
         playerInput = new();
         playerInput.Player.Enable();
         playerInput.Player.Jump.performed += Jump;
+        playerInput.Player.SwitchCharacter.performed += SwitchCharacter;
         playerInput.Player.Crouch.performed += Crouch;
         playerInput.Player.Crouch.canceled += UnCrouch;
         playerInput.Player.Movement.performed += RotationPerformed;
@@ -52,6 +53,10 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
     public void UnCrouch(InputAction.CallbackContext context)
     {
         playerManager_Instance.UnCrouch();
+    }
+    private void SwitchCharacter(InputAction.CallbackContext obj)
+    {
+        playerManager_Instance.SwitchCharacter(int.Parse(obj.control.displayName) - 1);
     }
 
     public Vector2 GetInputVector() => playerInput.Player.Movement.ReadValue<Vector2>().normalized;
