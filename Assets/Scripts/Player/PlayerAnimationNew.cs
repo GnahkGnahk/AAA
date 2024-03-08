@@ -65,4 +65,9 @@ public class PlayerAnimationNew : Singleton<PlayerAnimationNew>
                 break;
         }
     }
+
+    public void ChangeAvatar(Avatar avatar)
+    {
+        animatorController.avatar = avatar;
+    }
 }
