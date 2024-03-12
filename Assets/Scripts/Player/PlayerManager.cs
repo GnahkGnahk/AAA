@@ -1,6 +1,5 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +8,7 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] Rigidbody playerRigidbody;
     [SerializeField] float jumpForce, speed, runMaxSpeed, walkMaxSpeed, crouchMaxSpeed, rotationSpeed;
     [SerializeField] GroundCheck groundCheck;
+    [SerializeField] CollectItem collectItem;
     [SerializeField] CapsuleCollider playerCapsuleCollider;
     [SerializeField] Transform ModelPlayer;
 
@@ -49,7 +49,10 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Move();
         Animation();
-        logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name;
+        if (logStatus)
+        {
+            logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name + "\ncollectItem: " + collectItem.tagItem;
+        }
     }
 
     private void Update()
@@ -141,10 +144,26 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void PickUpItem()
     {
-        if (isPickingItem || isMoving || isJumping) return;
+        string tagItemCollect = collectItem.tagItem;
 
-        int choiceTemp = Random.Range(0, 3);
-        p_AnimationNew_Instance.PickItem((PickUpType)choiceTemp);
+        if (isPickingItem || isMoving || isJumping || tagItemCollect == "") return;
+
+        int choice = 1;
+        switch (collectItem.tagItem)
+        {
+            case Helper.TAG_LOCKER_N:
+                choice = 1;
+                break;
+
+            case Helper.TAG_TRASH_CAN:
+                choice = 0;
+                break;
+
+            default:
+                break;
+        }
+
+        p_AnimationNew_Instance.PickItem((PickUpType)choice);
         isPickingItem = true;
         p_InputSys_Instance.DisableMove();
     }
@@ -189,7 +208,10 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
-            logStatus.text += "\n\nJump press";
+            if (!logStatus)
+            {
+                logStatus.text += "\n\nJump press";
+            }
             p_AnimationNew_Instance.Jump();
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;

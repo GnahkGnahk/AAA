@@ -25,6 +25,12 @@ public class Helper
     public const string ANIMATOR_PICK_GROUND = "PickGround";
 
     public const string ANIMATOR_FALL_FLAT = "FallFlat";
+
+
+    //====================================================================== ANIMATOR
+    public const string TAG_LOCKER_N = "Locker_Normal";
+    public const string TAG_TRASH_CAN = "TrashCan";
+    public const string TAG_UNTAGGED = "Untagged";
 }
 
 public enum PickUpType
