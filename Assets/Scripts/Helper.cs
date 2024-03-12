@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Helper
 {
     //====================================================================== LAYER
@@ -38,4 +34,10 @@ public enum PickUpType
     GROUND,
     NORMAL,
     HIGH
+}
+
+public enum CameraType
+{
+    TOP_DOWN,
+    CROUCHING,
 }

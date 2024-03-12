@@ -5198,10 +5198,9 @@ MonoBehaviour:
   crouchMaxSpeed: 0.8
   rotationSpeed: 5
   groundCheck: {fileID: 825863329172445152}
+  collectItem: {fileID: 0}
   playerCapsuleCollider: {fileID: 815108398506263825}
   ModelPlayer: {fileID: 1901712381315786634}
-  CM_TopDown: {fileID: 0}
-  CM_Crouching: {fileID: 3372467955670689399}
   logStatus: {fileID: 0}
   playerHeight_Idle: 1.8
   playerHeight_Jump: 1.4
@@ -5324,6 +5323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db66af55cd624ec4f9c71f4e6e1a824e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagItem: 
+  objectTransform: {fileID: 0}
 --- !u!1 &9030106643073898586
 GameObject:
   m_ObjectHideFlags: 0

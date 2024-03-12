@@ -12,13 +12,12 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] CapsuleCollider playerCapsuleCollider;
     [SerializeField] Transform ModelPlayer;
 
-    [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
-
     [SerializeField] Text logStatus;
 
     internal PlayerAnimationNew p_AnimationNew_Instance;
     internal PlayerInputSys p_InputSys_Instance;
     internal PlayerSwitchCharacter p_SwitchCharacter_Instance;
+    internal CameraManager cameraMN_Instance;
 
     internal float rotationAngle_Run = -30f, rotationAngle_Crouch = 20f;
     internal bool isPickingItem = false, isJumping = false, isMoving = false;
@@ -39,6 +38,7 @@ public class PlayerManager : Singleton<PlayerManager>
         p_AnimationNew_Instance = PlayerAnimationNew.Instance;
         p_InputSys_Instance = PlayerInputSys.Instance;
         p_SwitchCharacter_Instance = PlayerSwitchCharacter.Instance;
+        cameraMN_Instance = CameraManager.Instance;
 
         playerHeight_Idle = playerCapsuleCollider.height;
         playerRadius_Idle = playerCapsuleCollider.radius;
@@ -66,7 +66,7 @@ public class PlayerManager : Singleton<PlayerManager>
     void Move() //  Add Force
     {
         if (isPickingItem) { return; }
-
+        Vector3 currentPos = transform.position;
         inputVector = p_InputSys_Instance.GetInputVector();
 
         if (groundCheck.isGrounded)
@@ -86,6 +86,11 @@ public class PlayerManager : Singleton<PlayerManager>
                 playerRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y) * speed, ForceMode.Force);
             }
 
+        }
+
+        if (currentPos != transform.position)
+        {
+            cameraMN_Instance.SetPosition(transform.position);
         }
     }
     
@@ -245,7 +250,7 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             AdjustPlayerColliderCrouch();
             isCrouching = true;
-            CM_Crouching.Priority = 99;
+            cameraMN_Instance.SetCameraOn(CameraType.CROUCHING);
         }
     }
 
@@ -256,7 +261,7 @@ public class PlayerManager : Singleton<PlayerManager>
         ResetColliderPlayer();
 
         isCrouching = false;
-        CM_Crouching.Priority = 1;
+        cameraMN_Instance.SetCameraOn(CameraType.CROUCHING, false);
     }
 
     public void SwitchCharacter(int choice)
