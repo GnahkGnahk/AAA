@@ -4422,5 +4422,10 @@ PrefabInstance:
       propertyPath: collectItem
       value: 
       objectReference: {fileID: 1174809814}
+    - target: {fileID: 9167479438588108084, guid: 6d813cbdfbf572f4da598157234340df,
+        type: 3}
+      propertyPath: playerHeight_PickUpGround
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d813cbdfbf572f4da598157234340df, type: 3}

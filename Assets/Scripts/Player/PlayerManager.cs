@@ -30,7 +30,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     float manitude;
 
-    public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 1f, playerHeight_Crouch = 1.5f,
+    public float playerHeight_Idle = 1.8f, playerHeight_Jump = 1.4f, playerHeight_PickUpGround = 0.75f, playerHeight_Crouch = 1.5f,
         playerRadius_Idle = 0.3f, playerRadius_Laid = 0.1f,
         playerCenter_Y_Idle = 0.9f, playerCenter_Y_Crouching = 0.75f;
 
