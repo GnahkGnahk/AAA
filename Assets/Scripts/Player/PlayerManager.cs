@@ -1,4 +1,4 @@
-using Cinemachine;
+﻿using Cinemachine;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -146,9 +146,9 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         string tagItemCollect = collectItem.tagItem;
 
-        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED) return;
+        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform)) return;
 
-        int choice = 1;
+        int choice;
         switch (collectItem.tagItem)
         {
             case Helper.TAG_LOCKER_N:
@@ -168,7 +168,25 @@ public class PlayerManager : Singleton<PlayerManager>
         isPickingItem = true;
         p_InputSys_Instance.DisableMove();
     }
+    bool IsLookAtObject(Transform targetTransform)
+    {
+        if (targetTransform != null)
+        {
+            Vector3 direction = targetTransform.position - transform.position;
 
+            Vector3 forward = transform.forward.normalized;
+            Vector3 targetDirection = direction.normalized;
+
+            float dotProduct = Vector3.Dot(forward, targetDirection);
+
+            return dotProduct > 0;
+        }
+        else
+        {
+            Debug.LogWarning("Non-Target");
+            return false;
+        }
+    }
 
     Coroutine rotateCoroutine;
     Vector3 targetDirection;
