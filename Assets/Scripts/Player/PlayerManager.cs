@@ -146,7 +146,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         string tagItemCollect = collectItem.tagItem;
 
-        if (isPickingItem || isMoving || isJumping || tagItemCollect == "") return;
+        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED) return;
 
         int choice = 1;
         switch (collectItem.tagItem)
@@ -155,12 +155,13 @@ public class PlayerManager : Singleton<PlayerManager>
                 choice = 1;
                 break;
 
-            case Helper.TAG_TRASH_CAN:
+            case Helper.TAG_TRASH_BIN:
                 choice = 0;
                 break;
 
             default:
-                break;
+                Debug.Log("PickUpItem Default case");
+                return;
         }
 
         p_AnimationNew_Instance.PickItem((PickUpType)choice);

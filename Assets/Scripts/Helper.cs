@@ -29,7 +29,7 @@ public class Helper
 
     //====================================================================== ANIMATOR
     public const string TAG_LOCKER_N = "Locker_Normal";
-    public const string TAG_TRASH_CAN = "TrashCan";
+    public const string TAG_TRASH_BIN = "TrashBin";
     public const string TAG_UNTAGGED = "Untagged";
 }
 
