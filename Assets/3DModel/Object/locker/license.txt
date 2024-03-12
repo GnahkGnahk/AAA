@@ -1,0 +1,11 @@
+Model Information:
+* title:	Locker
+* source:	https://sketchfab.com/3d-models/locker-6ab96c76558f43a3b0e1442bc0065f68
+* author:	andree (https://sketchfab.com/maestronoov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Locker" (https://sketchfab.com/3d-models/locker-6ab96c76558f43a3b0e1442bc0065f68) by andree (https://sketchfab.com/maestronoov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
