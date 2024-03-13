@@ -26,6 +26,7 @@ public class PlayerManager : Singleton<PlayerManager>
     internal bool isRotate = false;
 
     Vector2 inputVector;
+    Vector3 oldPos;
 
     float manitude;
 
@@ -42,6 +43,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         playerHeight_Idle = playerCapsuleCollider.height;
         playerRadius_Idle = playerCapsuleCollider.radius;
+        oldPos = transform.position;
     }
 
 
@@ -49,6 +51,8 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Move();
         Animation();
+        CameraFollowPlayer();
+
         if (logStatus)
         {
             logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name + "\ncollectItem: " + collectItem.tagItem;
@@ -66,7 +70,6 @@ public class PlayerManager : Singleton<PlayerManager>
     void Move() //  Add Force
     {
         if (isPickingItem) { return; }
-        Vector3 currentPos = transform.position;
         inputVector = p_InputSys_Instance.GetInputVector();
 
         if (groundCheck.isGrounded)
@@ -85,12 +88,6 @@ public class PlayerManager : Singleton<PlayerManager>
             {
                 playerRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y) * speed, ForceMode.Force);
             }
-
-        }
-
-        if (currentPos != transform.position)
-        {
-            cameraMN_Instance.SetPosition(transform.position);
         }
     }
     
@@ -246,6 +243,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void Crouch()
     {
+        if (isPickingItem) { return; }
         if (groundCheck.isGrounded && Mathf.Round(playerRigidbody.velocity.y) == 0)
         {
             AdjustPlayerColliderCrouch();
@@ -269,6 +267,13 @@ public class PlayerManager : Singleton<PlayerManager>
         if(isMoving || isCrouching || isJumping) { return; }
         ModelPlayer = p_SwitchCharacter_Instance.SwitchCharacter(choice);
         p_AnimationNew_Instance.ChangeAvatar(ModelPlayer.GetComponent<Animator>().avatar);
+    }
+
+    void CameraFollowPlayer()
+    {
+        if (oldPos == transform.position) return;
+        cameraMN_Instance.SetPosition(transform.position - oldPos);
+        oldPos = transform.position;
     }
 
     //=======================================================================================

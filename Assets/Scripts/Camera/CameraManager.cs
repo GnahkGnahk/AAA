@@ -17,6 +17,6 @@ public class CameraManager : Singleton<CameraManager>
 
     public void SetPosition(Vector3 position)
     {
-        transform.position += position;
+        transform.position += new Vector3(position.x, 0, position.z);
     }
 }
