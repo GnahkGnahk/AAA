@@ -6,6 +6,7 @@ using UnityEngine;
 public class CameraManager : Singleton<CameraManager>
 {
     [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
+    [SerializeField] GameObject miniCamera;
 
     public void SetCameraOn(CameraType cam, bool isActive = true)
     {
@@ -18,5 +19,10 @@ public class CameraManager : Singleton<CameraManager>
     public void SetPosition(Vector3 position)
     {
         transform.position += new Vector3(position.x, 0, position.z);
+    }
+
+    public void ActiveMiniCam(bool isActive = true)
+    {
+        miniCamera.SetActive(isActive);
     }
 }

@@ -36,14 +36,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void Start()
     {
-        p_AnimationNew_Instance = PlayerAnimationNew.Instance;
-        p_InputSys_Instance = PlayerInputSys.Instance;
-        p_SwitchCharacter_Instance = PlayerSwitchCharacter.Instance;
-        cameraMN_Instance = CameraManager.Instance;
-
-        playerHeight_Idle = playerCapsuleCollider.height;
-        playerRadius_Idle = playerCapsuleCollider.radius;
-        oldPos = transform.position;
+        InitSetting();
     }
 
 
@@ -249,6 +242,7 @@ public class PlayerManager : Singleton<PlayerManager>
             AdjustPlayerColliderCrouch();
             isCrouching = true;
             cameraMN_Instance.SetCameraOn(CameraType.CROUCHING);
+            cameraMN_Instance.ActiveMiniCam();
         }
     }
 
@@ -260,6 +254,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         isCrouching = false;
         cameraMN_Instance.SetCameraOn(CameraType.CROUCHING, false);
+        cameraMN_Instance.ActiveMiniCam(false);
     }
 
     public void SwitchCharacter(int choice)
@@ -274,6 +269,20 @@ public class PlayerManager : Singleton<PlayerManager>
         if (oldPos == transform.position) return;
         cameraMN_Instance.SetPosition(transform.position - oldPos);
         oldPos = transform.position;
+    }
+
+    void InitSetting()
+    {
+        p_AnimationNew_Instance = PlayerAnimationNew.Instance;
+        p_InputSys_Instance = PlayerInputSys.Instance;
+        p_SwitchCharacter_Instance = PlayerSwitchCharacter.Instance;
+        cameraMN_Instance = CameraManager.Instance;
+
+        playerHeight_Idle = playerCapsuleCollider.height;
+        playerRadius_Idle = playerCapsuleCollider.radius;
+        oldPos = transform.position;
+
+        cameraMN_Instance.ActiveMiniCam(false);
     }
 
     //=======================================================================================

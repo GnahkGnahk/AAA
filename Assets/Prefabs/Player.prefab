@@ -233,50 +233,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1 &2117913268983619613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6602271502819721193}
-  - component: {fileID: 3146961685906950042}
-  m_Layer: 3
-  m_Name: cm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6602271502819721193
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117913268983619613}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2422306254429579484}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3146961685906950042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117913268983619613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3064625660842933665
 GameObject:
   m_ObjectHideFlags: 0
@@ -5143,7 +5099,6 @@ Transform:
   - {fileID: 3064625660842933598}
   - {fileID: 1165341138}
   - {fileID: 1387513162}
-  - {fileID: 2422306254429579484}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5198,13 +5153,13 @@ MonoBehaviour:
   crouchMaxSpeed: 0.8
   rotationSpeed: 5
   groundCheck: {fileID: 825863329172445152}
-  collectItem: {fileID: 0}
+  collectItem: {fileID: 4615830294376742509}
   playerCapsuleCollider: {fileID: 815108398506263825}
   ModelPlayer: {fileID: 1901712381315786634}
   logStatus: {fileID: 0}
   playerHeight_Idle: 1.8
   playerHeight_Jump: 1.4
-  playerHeight_PickUpGround: 1
+  playerHeight_PickUpGround: 0.75
   playerHeight_Crouch: 1.5
   playerRadius_Idle: 0.3
   playerRadius_Laid: 0.1
@@ -5325,77 +5280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagItem: 
   objectTransform: {fileID: 0}
---- !u!1 &9030106643073898586
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2422306254429579484}
-  - component: {fileID: 3372467955670689399}
-  m_Layer: 3
-  m_Name: Camera Crouching
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2422306254429579484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9030106643073898586}
-  m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: 0.5, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6602271502819721193}
-  m_Father: {fileID: 3064625661714062708}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
---- !u!114 &3372467955670689399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9030106643073898586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ExcludedPropertiesInInspector:
-  - m_Script
-  m_LockStageInInspector: 
-  m_StreamingVersion: 20170927
-  m_Priority: 1
-  m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
-  m_Lens:
-    FieldOfView: 35
-    OrthographicSize: 10
-    NearClipPlane: 0.1
-    FarClipPlane: 5000
-    Dutch: 0
-    ModeOverride: 0
-    LensShift: {x: 0, y: 0}
-    GateFit: 2
-    m_SensorSize: {x: 1, y: 1}
-  m_Transitions:
-    m_BlendHint: 0
-    m_InheritPosition: 0
-    m_OnCameraLive:
-      m_PersistentCalls:
-        m_Calls: []
-  m_LegacyBlendHint: 0
-  m_ComponentOwner: {fileID: 6602271502819721193}
 --- !u!1001 &1448717368354558284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5542,6 +5426,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RidenEi-V1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d7a32347f0635543a03039d4b76c0d1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 9d7a32347f0635543a03039d4b76c0d1,
         type: 3}
