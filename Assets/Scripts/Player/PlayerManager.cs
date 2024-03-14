@@ -162,6 +162,9 @@ public class PlayerManager : Singleton<PlayerManager>
         p_AnimationNew_Instance.PickItem((PickUpType)choice);
         isPickingItem = true;
         p_InputSys_Instance.DisableMove();
+
+        cameraMN_Instance.SetCameraOn(CameraType.CROUCHING);
+        cameraMN_Instance.ActiveMiniCam();
     }
     bool IsLookAtObject(Transform targetTransform)
     {
@@ -369,5 +372,8 @@ public class PlayerManager : Singleton<PlayerManager>
         Debug.Log("Pick up Done");
         isPickingItem = false; ;
         p_InputSys_Instance.EnableMove();
+
+        cameraMN_Instance.SetCameraOn(CameraType.CROUCHING, false);
+        cameraMN_Instance.ActiveMiniCam(false);
     }
 }

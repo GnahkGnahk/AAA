@@ -41,6 +41,5 @@ public class CameraManager : Singleton<CameraManager>
         rectTransform.anchorMin = new Vector2(1f, 0f);
         rectTransform.anchorMax = new Vector2(1f, 0f);
         rectTransform.pivot = new Vector2(1f, 0f);
-        rectTransform.anchoredPosition = Vector2.zero;
     }
 }
