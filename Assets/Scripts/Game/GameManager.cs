@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] GameObject itemTrade;
+    [SerializeField] ItemManager itemTrade;
 
     private void Start()
     {
-        itemTrade.SetActive(false);
+        itemTrade.gameObject.SetActive(false);
     }
 
     public void OpenItemTrade(bool isOn = true)
     {
-        itemTrade.SetActive(isOn);
+        itemTrade.gameObject.SetActive(isOn);
     }
 }
