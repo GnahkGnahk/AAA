@@ -262,7 +262,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void SwitchCharacter(int choice)
     {
-        if(isMoving || isCrouching || isJumping) { return; }
+        if(isMoving || isCrouching || isJumping || isPickingItem) { return; }
         ModelPlayer = p_SwitchCharacter_Instance.SwitchCharacter(choice);
         p_AnimationNew_Instance.ChangeAvatar(ModelPlayer.GetComponent<Animator>().avatar);
     }
