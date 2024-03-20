@@ -2,6 +2,7 @@ public class Helper
 {
     //====================================================================== LAYER
     public const int LAYER_PLATFORM = 9;
+    
 
 
     //====================================================================== ANIMATOR
@@ -23,9 +24,10 @@ public class Helper
     public const string ANIMATOR_FALL_FLAT = "FallFlat";
 
 
-    //====================================================================== ANIMATOR
+    //====================================================================== TAG
     public const string TAG_LOCKER_N = "Locker_Normal";
     public const string TAG_TRASH_BIN = "TrashBin";
+    public const string TAG_ITEM_TRADE = "ItemTrade";
     public const string TAG_UNTAGGED = "Untagged";
 }
 

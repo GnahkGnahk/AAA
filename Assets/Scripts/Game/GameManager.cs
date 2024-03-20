@@ -8,7 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        itemTrade.gameObject.SetActive(false);
+        //itemTrade.gameObject.SetActive(false);
     }
 
     public void OpenItemTrade(bool isOn = true)

@@ -7,6 +7,12 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
     internal Vector2 inputVector;
 
     internal PlayerManager playerManager_Instance;
+
+    private void Start()
+    {
+        playerManager_Instance = PlayerManager.Instance;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,10 +25,13 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
         playerInput.Player.Movement.performed += RotationPerformed;
         playerInput.Player.Movement.canceled += RotationCanceled;
         playerInput.Player.Interact.performed += PickUpItem;
+        //playerInput.Player.Mouse.performed += Mouse_performed;
+
     }
-    private void Start()
+
+    private void Mouse_performed(InputAction.CallbackContext obj)
     {
-        playerManager_Instance = PlayerManager.Instance;
+        playerManager_Instance.MouseHandle(obj);
     }
 
     private void PickUpItem(InputAction.CallbackContext obj)

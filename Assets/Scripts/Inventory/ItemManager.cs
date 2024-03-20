@@ -5,4 +5,6 @@ using UnityEngine;
 public class ItemManager : Singleton<ItemManager>
 {
     [SerializeField] Inventory gameInventory, playerInventory;
+
+    public bool IsDropValidPos { get; set; }
 }

@@ -1,7 +1,10 @@
 ﻿using Cinemachine;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
@@ -12,12 +15,13 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] CapsuleCollider playerCapsuleCollider;
     [SerializeField] Transform ModelPlayer;
 
-    [SerializeField] Text logStatus;
+    [SerializeField] public Text logStatus;
 
     internal PlayerAnimationNew p_AnimationNew_Instance;
     internal PlayerInputSys p_InputSys_Instance;
     internal PlayerSwitchCharacter p_SwitchCharacter_Instance;
     internal CameraManager cameraMN_Instance;
+    internal GameManager gameMN_Instance;
 
     internal float rotationAngle_Run = -30f, rotationAngle_Crouch = 20f;
     internal bool isPickingItem = false, isJumping = false, isMoving = false;
@@ -45,10 +49,11 @@ public class PlayerManager : Singleton<PlayerManager>
         Move();
         Animation();
         CameraFollowPlayer();
-
         if (logStatus)
         {
             logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name + "\ncollectItem: " + collectItem.tagItem;
+
+            //logStatus.text = "Mouse : " + temp;
         }
     }
 
@@ -144,6 +149,7 @@ public class PlayerManager : Singleton<PlayerManager>
         if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform)) return;
 
         int choice;
+        gameMN_Instance.OpenItemTrade(true);
         switch (collectItem.tagItem)
         {
             case Helper.TAG_LOCKER_N:
@@ -267,6 +273,12 @@ public class PlayerManager : Singleton<PlayerManager>
         p_AnimationNew_Instance.ChangeAvatar(ModelPlayer.GetComponent<Animator>().avatar);
     }
 
+    System.Object temp = 0;
+    internal void MouseHandle(InputAction.CallbackContext obj)
+    {
+        temp = obj;
+    }
+
     void CameraFollowPlayer()
     {
         if (oldPos == transform.position) return;
@@ -280,6 +292,7 @@ public class PlayerManager : Singleton<PlayerManager>
         p_InputSys_Instance = PlayerInputSys.Instance;
         p_SwitchCharacter_Instance = PlayerSwitchCharacter.Instance;
         cameraMN_Instance = CameraManager.Instance;
+        gameMN_Instance = GameManager.Instance;
 
         playerHeight_Idle = playerCapsuleCollider.height;
         playerRadius_Idle = playerCapsuleCollider.radius;
