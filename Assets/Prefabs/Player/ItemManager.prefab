@@ -276,6 +276,7 @@ MonoBehaviour:
   isDestroyOnLoad: 0
   gameInventory: {fileID: 4574727779982483333}
   playerInventory: {fileID: 7432049508242356847}
+  closeBtn: {fileID: 2888929901190157048}
 --- !u!1 &8193817225391513677
 GameObject:
   m_ObjectHideFlags: 0

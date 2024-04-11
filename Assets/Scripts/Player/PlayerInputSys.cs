@@ -80,10 +80,28 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
 
     public Vector2 GetInputVector() => playerInput.Player.Movement.ReadValue<Vector2>().normalized;
 
-    public void EnableMove() => playerInput.Player.Movement.Enable();
-    public void DisableMove() => playerInput.Player.Movement.Disable();
-    public void EnableJump() => playerInput.Player.Jump.Enable();
-    public void DisableJump() => playerInput.Player.Jump.Disable();
-    public void EnablePlayer() => playerInput.Player.Enable();
-    public void DisablePlayer() => playerInput.Player.Disable();
+    public void SetEscape(bool enabled)
+    {
+        if (enabled) playerInput.Player.Escape.Enable();
+        else playerInput.Player.Escape.Disable();
+    }
+
+    public void SetMove(bool enabled)
+    {
+        if (enabled) playerInput.Player.Movement.Enable();
+        else playerInput.Player.Movement.Disable();
+    }
+
+    public void SetJump(bool enabled)
+    {
+        if (enabled) playerInput.Player.Jump.Enable();
+        else playerInput.Player.Jump.Disable();
+    }
+
+    public void SetPlayerControls(bool enabled)
+    {
+        if (enabled) playerInput.Player.Enable();
+        else playerInput.Player.Disable();
+    }
+
 }

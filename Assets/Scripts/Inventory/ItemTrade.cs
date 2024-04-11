@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -31,22 +32,25 @@ public class ItemTrade : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("Begin");
+        //Debug.Log("Begin");
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
         eventData.pointerDrag.transform.SetParent(rootParent.parent.parent);
+
+        ItemManager.Instance.SetUpWhileDragging(true);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Drag");
+        //Debug.Log("Drag");
         rectTransform.anchoredPosition += eventData.delta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("End");
+        //Debug.Log("End");
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        ItemManager.Instance.SetUpWhileDragging(false);
     }
 }

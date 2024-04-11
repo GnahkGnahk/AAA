@@ -166,7 +166,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         p_AnimationNew_Instance.PickItem((PickUpType)choice);
         isPickingItem = true;
-        p_InputSys_Instance.DisableMove();
+        p_InputSys_Instance.SetMove(false);
 
         cameraMN_Instance.SetCameraOn(CameraType.CROUCHING);
         cameraMN_Instance.ActiveMiniCam();
@@ -238,7 +238,7 @@ public class PlayerManager : Singleton<PlayerManager>
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
             if (manitude < 0.1f) isMoving = false;
-            p_InputSys_Instance.DisableJump();
+            p_InputSys_Instance.SetJump(false);
         }
     }
 
@@ -373,7 +373,7 @@ public class PlayerManager : Singleton<PlayerManager>
     void FallFlatEvent()
     {
         Debug.Log("FallFlatEvent");
-        p_InputSys_Instance.DisablePlayer();
+        p_InputSys_Instance.SetPlayerControls(false);
         playerCapsuleCollider.height = 0.1f;
         playerCapsuleCollider.radius = 0.1f;
     }
@@ -382,13 +382,13 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Debug.Log("Jump Done");
         isJumping = false;
-        p_InputSys_Instance.EnableJump();
+        p_InputSys_Instance.SetJump(true);
     }
     void PickUpDone()
     {
         Debug.Log("Pick up Done");
         isPickingItem = false; ;
-        p_InputSys_Instance.EnableMove();
+        p_InputSys_Instance.SetMove(true);
 
         cameraMN_Instance.SetCameraOn(CameraType.CROUCHING, false);
         cameraMN_Instance.ActiveMiniCam(false);
