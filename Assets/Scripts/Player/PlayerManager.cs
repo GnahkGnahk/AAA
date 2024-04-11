@@ -149,7 +149,6 @@ public class PlayerManager : Singleton<PlayerManager>
         if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform)) return;
 
         int choice;
-        gameMN_Instance.OpenItemTrade(true);
         switch (collectItem.tagItem)
         {
             case Helper.TAG_LOCKER_N:
@@ -277,6 +276,11 @@ public class PlayerManager : Singleton<PlayerManager>
     internal void MouseHandle(InputAction.CallbackContext obj)
     {
         temp = obj;
+    }
+
+    public void EscapePerformed()
+    {
+
     }
 
     void CameraFollowPlayer()

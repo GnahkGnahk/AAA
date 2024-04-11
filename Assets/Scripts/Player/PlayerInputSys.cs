@@ -7,10 +7,12 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
     internal Vector2 inputVector;
 
     internal PlayerManager playerManager_Instance;
+    internal GameManager gameManager_Instance;
 
     private void Start()
     {
         playerManager_Instance = PlayerManager.Instance;
+        gameManager_Instance = GameManager.Instance;
     }
 
     protected override void Awake()
@@ -25,6 +27,7 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
         playerInput.Player.Movement.performed += RotationPerformed;
         playerInput.Player.Movement.canceled += RotationCanceled;
         playerInput.Player.Interact.performed += PickUpItem;
+        playerInput.Player.Escape.performed += Escape_performed;
         //playerInput.Player.Mouse.performed += Mouse_performed;
 
     }
@@ -37,6 +40,7 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
     private void PickUpItem(InputAction.CallbackContext obj)
     {
         playerManager_Instance.PickUpItem();
+        gameManager_Instance.OpenItemTrade();
     }
 
     private void RotationPerformed(InputAction.CallbackContext obj)
@@ -66,6 +70,12 @@ public class PlayerInputSys : Singleton<PlayerInputSys>
     private void SwitchCharacter(InputAction.CallbackContext obj)
     {
         playerManager_Instance.SwitchCharacter(int.Parse(obj.control.displayName) - 1);
+    }
+    private void Escape_performed(InputAction.CallbackContext obj)
+    {
+        //playerManager_Instance.EscapePerformed();     //  now dont have function need cato call from playerManager_Ins
+
+        gameManager_Instance.OpenItemTrade(false);
     }
 
     public Vector2 GetInputVector() => playerInput.Player.Movement.ReadValue<Vector2>().normalized;

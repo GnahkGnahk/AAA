@@ -7,4 +7,10 @@ public class ItemManager : Singleton<ItemManager>
     [SerializeField] Inventory gameInventory, playerInventory;
 
     public bool IsDropValidPos { get; set; }
+
+    public void OpenItemManager(bool isOpen)
+    {
+        Debug.Log("CLICK ");
+        GameManager.Instance.OpenItemTrade(isOpen);
+    }
 }
