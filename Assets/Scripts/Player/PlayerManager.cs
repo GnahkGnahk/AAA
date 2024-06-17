@@ -51,9 +51,9 @@ public class PlayerManager : Singleton<PlayerManager>
         CameraFollowPlayer();
         if (logStatus)
         {
-            logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name + "\ncollectItem: " + collectItem.tagItem;
+            //logStatus.text = "isMoving: " + isMoving + "\nisJumping: " + isJumping + "\nisCrouching: " + isCrouching + "\n\n\n Model: " + ModelPlayer.name + "\ncollectItem: " + collectItem.tagItem;
 
-            //logStatus.text = "Mouse : " + temp;
+            logStatus.text = "manitude : " + manitude;
         }
     }
 
@@ -146,7 +146,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         string tagItemCollect = collectItem.tagItem;
 
-        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform)) return;
+        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform) || manitude != 0f) return;
 
         int choice;
         switch (collectItem.tagItem)
@@ -261,6 +261,12 @@ public class PlayerManager : Singleton<PlayerManager>
         ResetColliderPlayer();
 
         isCrouching = false;
+
+        if (isPickingItem)
+        {
+            Debug.Log("111");
+            return;
+        }
         cameraMN_Instance.SetCameraOn(CameraType.CROUCHING, false);
         cameraMN_Instance.ActiveMiniCam(false);
     }
