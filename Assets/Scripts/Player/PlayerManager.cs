@@ -142,11 +142,10 @@ public class PlayerManager : Singleton<PlayerManager>
         }
     }
 
+    internal bool CheckCanPickItem => !(isPickingItem || isJumping || collectItem.tagItem == "" || collectItem.tagItem == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform) || manitude != 0f);
     public void PickUpItem()
     {
-        string tagItemCollect = collectItem.tagItem;
-
-        if (isPickingItem || isMoving || isJumping || tagItemCollect == "" || tagItemCollect == Helper.TAG_UNTAGGED || !IsLookAtObject(collectItem.objectTransform) || manitude != 0f) return;
+        if (!CheckCanPickItem) return;
 
         int choice;
         switch (collectItem.tagItem)

@@ -16,6 +16,8 @@ public class GameManager : Singleton<GameManager>
 
     public void OpenItemTrade(bool isOn = true)
     {
+        if (!PlayerManager.Instance.isPickingItem) return;
+
         itemTrade.gameObject.SetActive(isOn);
         PauseGame(isOn);
     }

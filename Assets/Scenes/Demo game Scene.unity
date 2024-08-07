@@ -4159,6 +4159,11 @@ PrefabInstance:
       propertyPath: m_Lens.FieldOfView
       value: 47.57
       objectReference: {fileID: 0}
+    - target: {fileID: 6582659045796173937, guid: 7577e2c4dc245614ba39f1f2750037fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7577e2c4dc245614ba39f1f2750037fb, type: 3}
 --- !u!1001 &1535283493
