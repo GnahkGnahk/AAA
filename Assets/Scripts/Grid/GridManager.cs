@@ -7,6 +7,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
     [SerializeField] Transform visualPointer;
+    [SerializeField] FurnitureSO furnitureData;
+
 
     Vector3Int currentCellPosition;
 
@@ -16,13 +18,16 @@ public class GridManager : MonoBehaviour
         visualPointer.position = grid.CellToWorld(currentCellPosition);
     }
 
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("mousePointer : " + mousePointer.transform.position);
-            Debug.Log("cellPosition : " + currentCellPosition);
-            Debug.Log("visualPointer : " + visualPointer.transform.position);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
         }
     }
 }
