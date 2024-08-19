@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Mouse3D : MonoBehaviour
 {
@@ -29,7 +28,4 @@ public class Mouse3D : MonoBehaviour
             transform.position = hitInfo.point;
         }
     }
-
-    public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
-
 }

@@ -250,7 +250,11 @@ MonoBehaviour:
   grid: {fileID: 125052142}
   mousePointer: {fileID: 1507383048}
   visualPointer: {fileID: 1943084583}
+  visualCellFurniture: {fileID: 0}
+  btnHolder: {fileID: 872781293}
   furnitureData: {fileID: 11400000, guid: 8337dfa038f7c89409ccbec1293dad50, type: 2}
+  selectFurnitureBtnPrefab: {fileID: 3596506416775353850, guid: 489eae128030f97429e8f6d05ea685a1,
+    type: 3}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,13 +475,14 @@ GameObject:
   - component: {fileID: 872781293}
   - component: {fileID: 872781295}
   - component: {fileID: 872781294}
+  - component: {fileID: 872781296}
   m_Layer: 5
-  m_Name: BG
+  m_Name: Button holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &872781293
 RectTransform:
   m_ObjectHideFlags: 0
@@ -505,7 +510,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872781292}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
@@ -533,6 +538,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872781292}
   m_CullTransparentMesh: 1
+--- !u!114 &872781296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872781292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 200, y: 200}
+  m_Spacing: {x: 20, y: 20}
+  m_Constraint: 1
+  m_ConstraintCount: 2
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +907,7 @@ PrefabInstance:
     - target: {fileID: 952116932687260563, guid: df704271e1f687642b3826c9ff379a50,
         type: 3}
       propertyPath: m_Name
-      value: 1x1
+      value: 1x1_VisualPointer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df704271e1f687642b3826c9ff379a50, type: 3}
