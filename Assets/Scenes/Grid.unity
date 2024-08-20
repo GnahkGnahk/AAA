@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &67713326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67713327}
+  m_Layer: 9
+  m_Name: FurnitureHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &67713327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67713326}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &125052137
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +283,7 @@ MonoBehaviour:
   visualPointer: {fileID: 1943084583}
   visualCellFurniture: {fileID: 0}
   btnHolder: {fileID: 872781293}
+  furnitureHolder: {fileID: 67713327}
   furnitureData: {fileID: 11400000, guid: 8337dfa038f7c89409ccbec1293dad50, type: 2}
   selectFurnitureBtnPrefab: {fileID: 3596506416775353850, guid: 489eae128030f97429e8f6d05ea685a1,
     type: 3}

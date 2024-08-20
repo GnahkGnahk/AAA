@@ -6,17 +6,21 @@ using UnityEngine.UI;
 public class FurnitureButton : MonoBehaviour
 {
     [SerializeField] Text furnitureName;
-    public Furniture furnitureData { get; set; }
-    public GridManager gridManagerData { get; set; }
+    public Furniture FurnitureData { get; set; }
+    public GridManager GridManagerData { get; set; }
 
     public void SetupData(Furniture data, GridManager gridManager)
     {
-        furnitureData = data;
-        gridManagerData = gridManager;
+        FurnitureData = data;
+        GridManagerData = gridManager;
 
-        furnitureName.text = furnitureData.Name;
-        gameObject.name = furnitureData.Name;
+        furnitureName.text = FurnitureData.Name;
+        gameObject.name = FurnitureData.Name;
+    }
 
-        gameObject.GetComponent<Button>().onClick.AddListener(() => gridManagerData.StartPlacement(furnitureData.ID));
+    public void OnClickBtn()
+    {
+        GridManagerData.SetCurrentCellIndex(FurnitureData.ID);
+        GridManagerData.SetScaleVisualPointer(FurnitureData.Size, FurnitureData.Prefab.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().sharedMaterial);
     }
 }

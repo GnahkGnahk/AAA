@@ -6,11 +6,12 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, visualCellFurniture, btnHolder;
+    [SerializeField] Transform visualPointer, visualCellFurniture, btnHolder, furnitureHolder;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
 
-    public event Action OnClick, OnExit;
+    public event Action<int> OnClick;
+    public event Action OnExit;
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
 
     Vector3Int currentCellPosition;
@@ -20,11 +21,15 @@ public class GridManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            //OnClick.Invoke();
+            if (currentCellIndex < 0)
+            {
+                return;
+            }
+            OnClick.Invoke(currentCellIndex);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //OnExit.Invoke();
+            OnExit.Invoke();
         }
     }
 
@@ -36,8 +41,12 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        StopPlacement();
+        OnClick += StartPlacement;
+        OnExit += StopPlacement;
+
         InstantiateFurnitereBtn();
+
+        visualPointer.gameObject.SetActive(false);
     }
 
     void InstantiateFurnitereBtn()
@@ -49,28 +58,12 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void StartPlacement(int ID)
+    public void SetCurrentCellIndex(int ID)
     {
-        StopPlacement();
         currentCellIndex = furnitureData.listFurniture.FindIndex(f => f.ID == ID);
-        if (currentCellIndex < 0)
-        {
-            Debug.LogError($"ID '{ID}' is not found.");
-            return;
-        }
-
-        OnClick += PlaceStructure;
-        OnExit += StopPlacement;
     }
 
-    void StopPlacement()
-    {
-        OnClick -= PlaceStructure;
-        OnExit -= StopPlacement;
-
-    }
-
-    private void PlaceStructure()
+    public void StartPlacement(int ID)
     {
         if (IsPointerOverUI())
         {
@@ -78,5 +71,21 @@ public class GridManager : MonoBehaviour
         }
         GameObject furniture = Instantiate(furnitureData.listFurniture[currentCellIndex].Prefab);
         furniture.transform.position = currentCellPosition;
+    }
+
+    void StopPlacement()
+    {
+        currentCellIndex = -1;
+        visualPointer.gameObject.SetActive(false);
+    }
+
+    public void SetScaleVisualPointer(Vector2 newScale, Material material)
+    {
+        visualPointer.gameObject.SetActive(true);
+        float newScale_x = newScale.x;
+        float newScale_z = newScale.y;
+        visualPointer.transform.localScale = new Vector3(newScale_x, 1f, newScale_z);
+
+        visualPointer.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = material;
     }
 }
