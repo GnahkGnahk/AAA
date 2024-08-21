@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,7 +7,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, visualCellFurniture, btnHolder, furnitureHolder;
+    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
 
@@ -14,14 +15,37 @@ public class GridManager : MonoBehaviour
     public event Action OnExit;
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
 
+    Furniture currentFurnitureSelected = null;
     Vector3Int currentCellPosition;
     int currentCellIndex = -1;
 
+    GridData floorGridData, furnitureGridData;
+    bool isValidForPlace = false;
+
     private void Update()
     {
+        if (currentFurnitureSelected != null)
+        {
+            if (currentFurnitureSelected.CanPutItemOnSeft)
+            {
+                Debug.Log("1");
+                isValidForPlace = floorGridData.CalculateoccupiedGrid(
+                    currentCellPosition,
+                    currentFurnitureSelected,
+                    out _);
+            }
+            else
+            {
+                Debug.Log("2");
+                isValidForPlace = furnitureGridData.CalculateoccupiedGrid(
+                    currentCellPosition,
+                    currentFurnitureSelected,
+                    out _);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (currentCellIndex < 0)
+            if (currentCellIndex < 0 && !isValidForPlace)
             {
                 return;
             }
@@ -31,6 +55,7 @@ public class GridManager : MonoBehaviour
         {
             OnExit.Invoke();
         }
+
     }
 
     private void FixedUpdate()
@@ -47,6 +72,9 @@ public class GridManager : MonoBehaviour
         InstantiateFurnitereBtn();
 
         visualPointer.gameObject.SetActive(false);
+
+        floorGridData = new GridData();
+        furnitureGridData = new GridData();
     }
 
     void InstantiateFurnitereBtn()
@@ -65,27 +93,33 @@ public class GridManager : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
-        if (IsPointerOverUI())
-        {
-            return;
-        }
-        GameObject furniture = Instantiate(furnitureData.listFurniture[currentCellIndex].Prefab);
+        if (IsPointerOverUI()) return;
+
+        GameObject furniture = Instantiate(furnitureData.listFurniture[currentCellIndex].Prefab, furnitureHolder);
         furniture.transform.position = currentCellPosition;
+
+        if (currentFurnitureSelected.CanPutItemOnSeft)
+        {
+            floorGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);
+        }
     }
 
     void StopPlacement()
     {
+        currentFurnitureSelected = null;
         currentCellIndex = -1;
         visualPointer.gameObject.SetActive(false);
     }
 
-    public void SetScaleVisualPointer(Vector2 newScale, Material material)
+    public void SetScaleVisualPointer(Furniture furniture, Material material)
     {
         visualPointer.gameObject.SetActive(true);
-        float newScale_x = newScale.x;
-        float newScale_z = newScale.y;
+        float newScale_x = furniture.Size.x;
+        float newScale_z = furniture.Size.y;
         visualPointer.transform.localScale = new Vector3(newScale_x, 1f, newScale_z);
 
         visualPointer.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = material;
+
+        currentFurnitureSelected = furniture;
     }
 }

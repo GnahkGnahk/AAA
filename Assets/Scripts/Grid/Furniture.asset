@@ -15,19 +15,19 @@ MonoBehaviour:
   listFurniture:
   - <ID>k__BackingField: 0
     <Name>k__BackingField: Floor
-    <CanPutItemOnSeft>k__BackingField: 1
+    <CanPutItemOnSeft>k__BackingField: 0
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: df704271e1f687642b3826c9ff379a50,
       type: 3}
   - <ID>k__BackingField: 1
     <Name>k__BackingField: 2 x 2
-    <CanPutItemOnSeft>k__BackingField: 1
+    <CanPutItemOnSeft>k__BackingField: 0
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: 627f632428ac9f5489f634d4e2bad81a,
       type: 3}
   - <ID>k__BackingField: 3
     <Name>k__BackingField: 3 x 3
-    <CanPutItemOnSeft>k__BackingField: 1
+    <CanPutItemOnSeft>k__BackingField: 0
     <Size>k__BackingField: {x: 3, y: 2}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: 49b70dc2ad6ba4a47bc0a956a5e8327f,
       type: 3}
