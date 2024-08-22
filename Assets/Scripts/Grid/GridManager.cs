@@ -28,7 +28,6 @@ public class GridManager : MonoBehaviour
         {
             if (currentFurnitureSelected.CanPutItemOnSeft)
             {
-                Debug.Log("1");
                 isValidForPlace = floorGridData.CalculateoccupiedGrid(
                     currentCellPosition,
                     currentFurnitureSelected,
@@ -36,7 +35,6 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("2");
                 isValidForPlace = furnitureGridData.CalculateoccupiedGrid(
                     currentCellPosition,
                     currentFurnitureSelected,
@@ -45,10 +43,12 @@ public class GridManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (currentCellIndex < 0 && !isValidForPlace)
+            Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
+            if (currentCellIndex < 0 || !isValidForPlace)
             {
                 return;
             }
+            Debug.Log("Invoke click");
             OnClick.Invoke(currentCellIndex);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -101,6 +101,10 @@ public class GridManager : MonoBehaviour
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
             floorGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);
+        }
+        else
+        {
+            furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);
         }
     }
 

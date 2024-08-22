@@ -12,15 +12,21 @@ public class GridData
     {
         bool isCanPutItemOnSeft = furniture.CanPutItemOnSeft;
 
-        if (!CalculateoccupiedGrid(gridPosition, furniture, out List<Vector3Int> occupiedPosition))
+        bool temp = CalculateoccupiedGrid(gridPosition, furniture, out List<Vector3Int> occupiedPosition);
+
+        Debug.Log("AddObjectAt : " + temp);
+
+        if (!temp)
         {
             return; 
         }
 
         PlacementData placementData;
 
+        Debug.Log("count = " + occupiedPosition.Count);
         foreach (var position in occupiedPosition)
         {
+            Debug.Log("cell(x:y) = " + position);
             if (cellPlacedData.ContainsKey(position) && !isCanPutItemOnSeft)
             {
                 throw new Exception($"This ({position}) cell is occupied");     // guess this will never happend
@@ -29,7 +35,7 @@ public class GridData
             {
                 placementData = new(occupiedPosition, furniture, index);
 
-                cellPlacedData[gridPosition] = placementData;
+                cellPlacedData[position] = placementData;
                 Debug.Log("Add cell done"); //  not log ?
             }
         }
@@ -49,14 +55,14 @@ public class GridData
                 Vector3Int cell = gridOffsetPosition + new Vector3Int(x, 0, y);
                 if (cellPlacedData.ContainsKey(cell) && !furniture.CanPutItemOnSeft)
                 {
-                    Debug.Log("false");
+                    //Debug.Log("Calculate : false");
                     returnList.Clear();
                     return false;
                 }
                 returnList.Add(cell);
             }
         }
-        Debug.Log("true");
+        //Debug.Log("Calculate : true");
         return true;
     }
 }
