@@ -22,6 +22,8 @@ public class GridManager : MonoBehaviour
     GridData floorGridData, furnitureGridData;
     bool isValidForPlace = false;
 
+    Vector3Int bottomLeftLocation;
+
     private void Update()
     {
         if (currentFurnitureSelected != null)
@@ -43,12 +45,12 @@ public class GridManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
+            //Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
             if (currentCellIndex < 0 || !isValidForPlace)
             {
                 return;
             }
-            Debug.Log("Invoke click");
+            //Debug.Log("Invoke click");
             OnClick.Invoke(currentCellIndex);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -62,6 +64,8 @@ public class GridManager : MonoBehaviour
     {
         currentCellPosition = grid.WorldToCell(mousePointer.transform.position);
         visualPointer.position = grid.CellToWorld(currentCellPosition);
+
+        //Debug.Log(currentCellPosition);
     }
 
     private void Start()
@@ -75,6 +79,9 @@ public class GridManager : MonoBehaviour
 
         floorGridData = new GridData();
         furnitureGridData = new GridData();
+
+        bottomLeftLocation = new((int)grid.transform.localScale.x * -5, (int)grid.transform.localScale.y * -5, (int)grid.transform.localScale.z * -5);
+
     }
 
     void InstantiateFurnitereBtn()
@@ -100,11 +107,19 @@ public class GridManager : MonoBehaviour
 
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
-            floorGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);
+            floorGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);            
         }
         else
         {
-            furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);
+            if (furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected))
+            {
+                // Success place object
+                float distance = Vector3.Distance(currentCellPosition, bottomLeftLocation);
+
+                //Debug.Log("bottomLeftLocation: " + bottomLeftLocation);
+                Debug.Log("currentCellPosition: " + currentCellPosition);
+                Debug.Log("distance: " + distance);
+            }
         }
     }
 

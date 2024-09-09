@@ -26,14 +26,14 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: 627f632428ac9f5489f634d4e2bad81a,
       type: 3}
   - <ID>k__BackingField: 3
-    <Name>k__BackingField: 3 x 3
+    <Name>k__BackingField: 3 x 2
     <CanPutItemOnSeft>k__BackingField: 0
     <Size>k__BackingField: {x: 3, y: 2}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: 49b70dc2ad6ba4a47bc0a956a5e8327f,
       type: 3}
   - <ID>k__BackingField: 4
     <Name>k__BackingField: 3 x 3
-    <CanPutItemOnSeft>k__BackingField: 1
+    <CanPutItemOnSeft>k__BackingField: 0
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: 08e3a02297d511644801d81de9baeab1,
       type: 3}

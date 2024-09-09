@@ -8,25 +8,25 @@ public class GridData
 {
     Dictionary<Vector3Int, PlacementData> cellPlacedData = new();
 
-    public void AddObjectAt(Vector3Int gridPosition, Furniture furniture, int index = 0)
+    public bool AddObjectAt(Vector3Int gridPosition, Furniture furniture, int index = 0)
     {
         bool isCanPutItemOnSeft = furniture.CanPutItemOnSeft;
 
         bool temp = CalculateoccupiedGrid(gridPosition, furniture, out List<Vector3Int> occupiedPosition);
 
-        Debug.Log("AddObjectAt : " + temp);
+        //Debug.Log("AddObjectAt : " + temp);
 
         if (!temp)
         {
-            return; 
+            return false; 
         }
 
         PlacementData placementData;
 
-        Debug.Log("count = " + occupiedPosition.Count);
+        //Debug.Log("count = " + occupiedPosition.Count);
         foreach (var position in occupiedPosition)
         {
-            Debug.Log("cell(x:y) = " + position);
+            //Debug.Log("cell(x:y) = " + position);
             if (cellPlacedData.ContainsKey(position) && !isCanPutItemOnSeft)
             {
                 throw new Exception($"This ({position}) cell is occupied");     // guess this will never happend
@@ -36,9 +36,11 @@ public class GridData
                 placementData = new(occupiedPosition, furniture, index);
 
                 cellPlacedData[position] = placementData;
-                Debug.Log("Add cell done"); //  not log ?
+                //Debug.Log("Add cell done"); //  not log ?
             }
         }
+
+        return true;
     }
 
     public bool CalculateoccupiedGrid(Vector3Int gridOffsetPosition, Furniture furniture, out List<Vector3Int> returnList)
