@@ -17,7 +17,7 @@ public class GridManager : MonoBehaviour
 
     Furniture currentFurnitureSelected = null;
     Vector3Int currentCellPosition;
-    int currentCellIndex = -1;
+    int currentFurnitureID = -1;
 
     GridData floorGridData, furnitureGridData;
     bool isValidForPlace = false;
@@ -46,12 +46,12 @@ public class GridManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             //Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
-            if (currentCellIndex < 0 || !isValidForPlace)
+            if (currentFurnitureID < 0 || !isValidForPlace)
             {
                 return;
             }
             //Debug.Log("Invoke click");
-            OnClick.Invoke(currentCellIndex);
+            OnClick.Invoke(currentFurnitureID);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -95,14 +95,14 @@ public class GridManager : MonoBehaviour
 
     public void SetCurrentCellIndex(int ID)
     {
-        currentCellIndex = furnitureData.listFurniture.FindIndex(f => f.ID == ID);
+        currentFurnitureID = furnitureData.listFurniture.FindIndex(f => f.ID == ID);
     }
 
     public void StartPlacement(int ID)
     {
         if (IsPointerOverUI()) return;
 
-        GameObject furniture = Instantiate(furnitureData.listFurniture[currentCellIndex].Prefab, furnitureHolder);
+        GameObject furniture = Instantiate(furnitureData.listFurniture[currentFurnitureID].Prefab, furnitureHolder);
         furniture.transform.position = currentCellPosition;
 
         if (currentFurnitureSelected.CanPutItemOnSeft)
@@ -114,11 +114,7 @@ public class GridManager : MonoBehaviour
             if (furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected))
             {
                 // Success place object
-                float distance = Vector3.Distance(currentCellPosition, bottomLeftLocation);
-
-                //Debug.Log("bottomLeftLocation: " + bottomLeftLocation);
-                Debug.Log("currentCellPosition: " + currentCellPosition);
-                Debug.Log("distance: " + distance);
+                //float distance = Vector3.Distance(currentCellPosition, bottomLeftLocation);   
             }
         }
     }
@@ -126,7 +122,7 @@ public class GridManager : MonoBehaviour
     void StopPlacement()
     {
         currentFurnitureSelected = null;
-        currentCellIndex = -1;
+        currentFurnitureID = -1;
         visualPointer.gameObject.SetActive(false);
     }
 

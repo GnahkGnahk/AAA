@@ -15,7 +15,7 @@ MonoBehaviour:
   listFurniture:
   - <ID>k__BackingField: 0
     <Name>k__BackingField: Floor
-    <CanPutItemOnSeft>k__BackingField: 0
+    <CanPutItemOnSeft>k__BackingField: 1
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 952116932687260563, guid: df704271e1f687642b3826c9ff379a50,
       type: 3}
