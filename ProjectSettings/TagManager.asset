@@ -47,3 +47,6 @@ TagManager:
   - name: Furniture
     uniqueID: 3795816299
     locked: 0
+  - name: World UI
+    uniqueID: 2794699305
+    locked: 0
