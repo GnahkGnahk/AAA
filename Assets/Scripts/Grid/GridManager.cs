@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,9 +8,10 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder;
+    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
+    [SerializeField] Vector2 spawnAmount;
 
     public event Action<int> OnClick;
     public event Action OnExit;
@@ -19,7 +21,7 @@ public class GridManager : MonoBehaviour
     Vector3Int currentCellPosition;
     int currentFurnitureID = -1;
 
-    GridData floorGridData, furnitureGridData;
+    GridData cloudGridData, furnitureGridData;
     bool isValidForPlace = false;
 
     Vector3Int bottomLeftLocation;
@@ -30,7 +32,7 @@ public class GridManager : MonoBehaviour
         {
             if (currentFurnitureSelected.CanPutItemOnSeft)
             {
-                isValidForPlace = floorGridData.CalculateoccupiedGrid(
+                isValidForPlace = cloudGridData.CalculateoccupiedGrid(
                     currentCellPosition,
                     currentFurnitureSelected,
                     out _);
@@ -65,7 +67,7 @@ public class GridManager : MonoBehaviour
         currentCellPosition = grid.WorldToCell(mousePointer.transform.position);
         visualPointer.position = grid.CellToWorld(currentCellPosition);
 
-        //Debug.Log(currentCellPosition);
+        //Debug.Log("visualPointer : " + visualPointer.position);
     }
 
     private void Start()
@@ -77,13 +79,33 @@ public class GridManager : MonoBehaviour
 
         visualPointer.gameObject.SetActive(false);
 
-        floorGridData = new GridData();
+        cloudGridData = new GridData();
         furnitureGridData = new GridData();
 
         bottomLeftLocation = new((int)grid.transform.localScale.x * -5, (int)grid.transform.localScale.y * -5, (int)grid.transform.localScale.z * -5);
 
+        SetUpCloud();
     }
 
+    void SetUpCloud()
+    {
+        Vector3 tempPos = grid.CellToWorld(bottomLeftLocation);
+        for (int i = 0; i < spawnAmount.x; i++)
+        {
+            for (int j = 0; j < spawnAmount.y; j++)
+            {
+                Vector3Int tmpPos = new((int)tempPos.x + i, 10, (int)tempPos.z + j);
+
+                int tempID = furnitureData.listFurniture.FindIndex(f => f.Name == "Clound");
+                Furniture fur = furnitureData.listFurniture[tempID];
+
+                GameObject gameObject_Cloud = Instantiate(fur.Prefab, tmpPos, Quaternion.identity);
+                gameObject_Cloud.transform.parent = clounHolder.transform;
+                cloudGridData.AddObjectAt(tmpPos, fur);
+
+            }
+        }
+    }
     void InstantiateFurnitereBtn()
     {
         foreach (var furniture in furnitureData.listFurniture)
@@ -107,7 +129,7 @@ public class GridManager : MonoBehaviour
 
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
-            floorGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);            
+            cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);            
         }
         else
         {

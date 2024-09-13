@@ -29,5 +29,6 @@ public enum ArchitectureType
     MAIN_TOWNHALL,
     PRODUCTION_GOLD,
     PRODUCTION_TROOP,
-    DEFENSE_FENCE
+    DEFENSE_FENCE,
+    OTHER,
 }

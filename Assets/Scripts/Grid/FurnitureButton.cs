@@ -21,6 +21,6 @@ public class FurnitureButton : MonoBehaviour
     public void OnClickBtn()
     {
         GridManagerData.SetCurrentCellIndex(FurnitureData.ID);
-        GridManagerData.SetScaleVisualPointer(FurnitureData, FurnitureData.Prefab.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().sharedMaterial);
+        GridManagerData.SetScaleVisualPointer(FurnitureData, FurnitureData.Prefab.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterial);
     }
 }

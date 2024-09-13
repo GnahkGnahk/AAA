@@ -15,7 +15,6 @@ public class LookAtCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        Debug.Log(Camera.main.transform.parent.name);
         switch (mode)
         {
             case CameraLookMode.LookAt:
