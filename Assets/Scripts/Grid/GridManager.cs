@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
     GridData cloudGridData, furnitureGridData;
     bool isValidForPlace = false;
 
-    Vector3Int bottomLeftLocation;
+    internal Vector3Int bottomLeftLocation;
 
     private void Update()
     {
@@ -94,12 +94,13 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < spawnAmount.y; j++)
             {
-                Vector3Int tmpPos = new((int)tempPos.x + i, 10, (int)tempPos.z + j);
+                Vector3Int tmpPos = new((int)tempPos.x + i, 1, (int)tempPos.z + j);
 
                 int tempID = furnitureData.listFurniture.FindIndex(f => f.Name == "Clound");
                 Furniture fur = furnitureData.listFurniture[tempID];
 
                 GameObject gameObject_Cloud = Instantiate(fur.Prefab, tmpPos, Quaternion.identity);
+                gameObject_Cloud.name = tmpPos.x + "_" + tmpPos.z;
                 gameObject_Cloud.transform.parent = clounHolder.transform;
                 cloudGridData.AddObjectAt(tmpPos, fur);
 
