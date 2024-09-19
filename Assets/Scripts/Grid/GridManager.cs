@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,10 +8,12 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder, troops;
+    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
     [SerializeField] Vector2 spawnAmount;
+
+    [SerializeField] MovingTroop troops;
 
     public event Action<int> OnClick;
     public event Action OnExit;
@@ -81,23 +83,25 @@ public class GridManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector3Int troopPos = grid.WorldToCell(troops.position);
+            Vector3Int troopPos = grid.WorldToCell(troops.transform.position);
             startX = troopPos.x;
             startY = troopPos.z;
 
             Debug.Log("startX : " + startX + ", startY : " + startY);
             List<PathNod> path = pathFinding.FindPath(startX, startY, endX, endY);
-            if(path.Count > 0)
-            {
-                Debug.Log("Show path");
-                for (int i = 0; i < path.Count; i++)
-                {
-                    Debug.Log("i: " + i);
-                    Debug.Log(path[i].ToString());
-                }
-
-            }
+            troops.MoveToPositions(NodeToV3(path));
         }
+    }
+
+    List<Vector3> NodeToV3(List<PathNod> pathNode)
+    {
+        List<Vector3> vector3s = new();
+        for (int i = 0; i < pathNode.Count; i++)
+        {
+            vector3s.Add(new(pathNode[i].x, 1f, pathNode[i].y));
+        }
+
+        return vector3s;
     }
 
     private void FixedUpdate()
