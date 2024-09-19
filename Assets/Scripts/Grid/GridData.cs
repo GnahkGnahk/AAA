@@ -67,6 +67,8 @@ public class GridData
         //Debug.Log("Calculate : true");
         return true;
     }
+
+
 }
 
 internal class PlacementData

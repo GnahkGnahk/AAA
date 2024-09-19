@@ -54,8 +54,8 @@ Material:
     - _ShieldSpeed: 0.5
     - _Speed: 1.03
     m_Colors:
-    - _EmissionColor: {r: 0, g: 22.363522, b: 20.490139, a: 0}
-    - _GradientColor: {r: 0, g: 12.844469, b: 10.827013, a: 1}
+    - _EmissionColor: {r: 0, g: 0.28382537, b: 0.2615354, a: 0}
+    - _GradientColor: {r: 0, g: 110.13088, b: 92.83284, a: 1}
     - _MainTexTiling: {r: 5, g: 5, b: 0, a: 0}
     - _ShieldColor: {r: 12.99604, g: 1.851279, b: 0, a: 1}
   m_BuildTextureStacks: []

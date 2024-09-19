@@ -7,7 +7,7 @@ public class Mouse3D : MonoBehaviour
     [SerializeField] bool isSpecificLayerMask;
 
 
-    private void Update()
+    public void RayCastPointer()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 

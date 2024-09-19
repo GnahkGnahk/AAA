@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder;
+    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder, troops;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
     [SerializeField] Vector2 spawnAmount;
@@ -26,8 +26,16 @@ public class GridManager : MonoBehaviour
 
     internal Vector3Int bottomLeftLocation;
 
+    PathFinding pathFinding;
+    int startX, startY, endX, endY;
+
     private void Update()
     {
+        mousePointer.RayCastPointer();
+
+        currentCellPosition = grid.WorldToCell(mousePointer.transform.position);
+        visualPointer.position = grid.CellToWorld(currentCellPosition);
+
         if (currentFurnitureSelected != null)
         {
             if (currentFurnitureSelected.CanPutItemOnSeft)
@@ -50,23 +58,50 @@ public class GridManager : MonoBehaviour
             //Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
             if (currentFurnitureID < 0 || !isValidForPlace)
             {
-                return;
+                //return;
             }
-            //Debug.Log("Invoke click");
-            OnClick.Invoke(currentFurnitureID);
+            else
+            {
+                //Debug.Log("Invoke click");
+                OnClick.Invoke(currentFurnitureID);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnExit.Invoke();
         }
 
+
+        
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            endX = currentCellPosition.x;
+            endY = currentCellPosition.z;
+            Debug.Log("endX : " + endX + ", endY : " + endY);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector3Int troopPos = grid.WorldToCell(troops.position);
+            startX = troopPos.x;
+            startY = troopPos.z;
+
+            Debug.Log("startX : " + startX + ", startY : " + startY);
+            List<PathNod> path = pathFinding.FindPath(startX, startY, endX, endY);
+            if(path.Count > 0)
+            {
+                Debug.Log("Show path");
+                for (int i = 0; i < path.Count; i++)
+                {
+                    Debug.Log("i: " + i);
+                    Debug.Log(path[i].ToString());
+                }
+
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        currentCellPosition = grid.WorldToCell(mousePointer.transform.position);
-        visualPointer.position = grid.CellToWorld(currentCellPosition);
-
         //Debug.Log("visualPointer : " + visualPointer.position);
     }
 
@@ -84,7 +119,9 @@ public class GridManager : MonoBehaviour
 
         bottomLeftLocation = new((int)grid.transform.localScale.x * -5, (int)grid.transform.localScale.y * -5, (int)grid.transform.localScale.z * -5);
 
-        SetUpCloud();
+        //SetUpCloud();
+
+        pathFinding = new(bottomLeftLocation);
     }
 
     void SetUpCloud()
