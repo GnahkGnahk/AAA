@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class TextureCreate : MonoBehaviour
 {
-    [SerializeField] private Material fogMaterial;
+    [SerializeField] Material cloudMaterial;
 
     [SerializeField] GridManager gridManager;
 
-    private bool[,] fogMatrix; //All value is False
-    private Texture2D fogAlphaTexture;
-    private Vector2Int currentCell = Vector2Int.zero;
+    bool[,] fogMatrix; //All value is False
+    Texture2D fogAlphaTexture;
 
     int size = 0;
-    public List<Vector3Int> noCloud = new List<Vector3Int>();
 
     private void Start()
     {
         size = gridManager.bottomLeftLocation.x * -2;
         fogMatrix = new bool[size, size];
 
+        GenerateTexture();
     }
 
     private void GenerateTexture()
@@ -34,23 +35,30 @@ public class TextureCreate : MonoBehaviour
         {
             for (int col = 0; col < size; col++)
             {
-                fogAlphaTexture.SetPixel(row, col, /*fogMatrix[row, col] ? Color.clear :*/ Color.white);
+                fogAlphaTexture.SetPixel(row, col, fogMatrix[row, col] ? Color.clear : Color.white);
             }
         }
         fogAlphaTexture.Apply();
 
-        fogMaterial.SetTexture("AlphaTexture", fogAlphaTexture);
+
+        cloudMaterial.SetTexture("_AlphaTexture", fogAlphaTexture);
+
+        ImportTextureAsset(fogAlphaTexture);
     }
-    private void Update()
+
+    void ImportTextureAsset(Texture2D texture)
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            GenerateTexture();
-            //foreach (var position in noCloud)
-            //{
-            //    UpdateTexture(position.x, position.z);
-            //}
-        }
+        // Mã hóa texture thành byte array d??i ??nh d?ng PNG
+        byte[] bytes = texture.EncodeToPNG();
+
+        // Xác ??nh ???ng d?n ??n n?i l?u file PNG
+        string filepath = Path.Combine(Application.dataPath, "Shaders/CreateTexture/texture1.png");
+
+        // Ghi file PNG ra ??a
+        File.WriteAllBytes(filepath, bytes);
+
+        // Thêm texture m?i vào Asset Database c?a Unity
+        AssetDatabase.ImportAsset("Assets/Shaders/CreateTexture/texture1.png");
     }
 
     private void UpdateTexture(Vector2Int cell, Vector2Int size)
