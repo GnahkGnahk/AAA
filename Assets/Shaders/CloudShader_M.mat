@@ -59,11 +59,13 @@ Material:
     - _Alpha: 11.94
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
+    - _CloudSpeed: 0.1
     - _LOD: 0
-    - _NoiseScale: 3.39
+    - _NoiseScale: 1.45
+    - _NoiseSpeed: 0.1
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _Speed: 0.799
+    - _Speed: 0
     m_Colors:
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
