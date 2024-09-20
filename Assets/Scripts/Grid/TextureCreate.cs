@@ -18,18 +18,13 @@ public class TextureCreate : MonoBehaviour
     int size = 0;
     int offset = 0;
 
-    private void Start()
+    public void GenerateTexture()
     {
         size = gridManager.bottomLeftLocation.x * -2;
         offset = Mathf.Abs(gridManager.bottomLeftLocation.x);
         fogMatrix = new bool[size, size];
-
-        GenerateTexture();
-    }
-
-    private void GenerateTexture()
-    {
         Debug.Log("Size: " + (size));
+
         fogAlphaTexture = new Texture2D(size, size, TextureFormat.RGBA32, false)
         {
             filterMode = FilterMode.Point,       // No smoothing, pixel-perfect
@@ -94,18 +89,33 @@ public class TextureCreate : MonoBehaviour
         // Apply the changes to the texture
         if (hasChanged) fogAlphaTexture.Apply();
     }
-    public void UpdateTexture(int x, int y)
+    public void ClearCloud(int x, int y)
     {
-        Debug.Log(x + " " + y);
+        //Debug.Log("W: " + fogAlphaTexture.width + ", H: " + fogAlphaTexture.height);
         fogAlphaTexture.SetPixel(x, y, Color.clear);
         fogAlphaTexture.Apply();
+        //ImportTextureAsset(fogAlphaTexture);
     }
 
-    internal void OpenCloud(List<PathNod> path)
+    public void ClearCloud(int x, int y, int bonusVision)
     {
-        for (int i = 0; i < path.Count; i++)
+        for (int i = -bonusVision; i < bonusVision; i++)
         {
-            UpdateTexture(path[i].x + offset, path[i].y + offset);
+            for (int j = -bonusVision; j < bonusVision; j++)
+            {
+                ClearCloud(x + i, y + j);
+            }
+        }
+    }
+    public void ClearCloud(float x, float y, int bonusVision)
+    {
+        //Debug.Log(x + " " + y);
+        for (int i = -bonusVision; i < bonusVision; i++)
+        {
+            for (int j = -bonusVision; j < bonusVision; j++)
+            {
+                ClearCloud((int)x + i, (int)y + j);
+            }
         }
     }
 }

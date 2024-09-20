@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
     [SerializeField] Vector2 spawnAmount;
+    [Range(0, 10)][SerializeField] int visionAtStart = 5;
 
     [SerializeField] MovingTroop troops;
 
@@ -32,6 +33,7 @@ public class GridManager : MonoBehaviour
 
     PathFinding pathFinding;
     int startX, startY, endX, endY;
+    int offset = 0;
 
     private void Update()
     {
@@ -128,10 +130,14 @@ public class GridManager : MonoBehaviour
         furnitureGridData = new GridData();
 
         bottomLeftLocation = new((int)grid.transform.localScale.x * -5, (int)grid.transform.localScale.y * -5, (int)grid.transform.localScale.z * -5);
+        offset = Mathf.Abs(bottomLeftLocation.x);
 
-        SetUpCloud();
+        //SetUpCloud();
 
         pathFinding = new(bottomLeftLocation);
+
+        textureCloundHandling.GenerateTexture();
+        textureCloundHandling.ClearCloud(troops.transform.position.x + offset, troops.transform.position.z + offset, visionAtStart);
     }
 
     void SetUpCloud()

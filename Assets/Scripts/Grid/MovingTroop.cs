@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MovingTroop : MonoBehaviour {
     [SerializeField] float speed = 1f;
     [SerializeField] float waypointThreshold = 0.01f;
+    [SerializeField] int bonusVision;
     [SerializeField] TextureCreate textureCloundHandling;
     [SerializeField] GridManager gridManager;
 
@@ -13,7 +14,7 @@ public class MovingTroop : MonoBehaviour {
     private void Start()
     {
         offset = Mathf.Abs(gridManager.bottomLeftLocation.x);
-        Debug.Log("offset: " + offset);
+        //Debug.Log("offset: " + offset);
     }
 
     public void MoveToPositions(List<PathNod> targetPositions)
@@ -38,20 +39,9 @@ public class MovingTroop : MonoBehaviour {
             yield return null;
         }
 
-        textureCloundHandling.UpdateTexture(targetPositionNode.x + offset, targetPositionNode.y + offset);
+        textureCloundHandling.ClearCloud(targetPositionNode.x + offset, targetPositionNode.y + offset, bonusVision);
 
         transform.position = targetPosition;
-    }
-
-    List<Vector3> NodeToV3(List<PathNod> pathNode)
-    {
-        List<Vector3> vector3s = new();
-        for (int i = 0; i < pathNode.Count; i++)
-        {
-            vector3s.Add(NodeToV3(pathNode[i]));
-        }
-
-        return vector3s;
     }
 
     Vector3 NodeToV3(PathNod pathNode)
