@@ -15,6 +15,8 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] MovingTroop troops;
 
+    [SerializeField] TextureCreate textureCloundHandling;
+
     public event Action<int> OnClick;
     public event Action OnExit;
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
@@ -57,6 +59,7 @@ public class GridManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            #region Place Object
             //Debug.Log("Index / valid _ " + currentCellIndex + " / " + isValidForPlace);
             if (currentFurnitureID < 0 || !isValidForPlace)
             {
@@ -66,10 +69,12 @@ public class GridManager : MonoBehaviour
             {
                 //Debug.Log("Invoke click");
                 OnClick.Invoke(currentFurnitureID);
-            }
+            } 
+            #endregion
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            //  Cancel place object
             OnExit.Invoke();
         }
 
@@ -77,12 +82,15 @@ public class GridManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
+            #region Select destination for troop
             endX = currentCellPosition.x;
             endY = currentCellPosition.z;
-            Debug.Log("endX : " + endX + ", endY : " + endY);
+            Debug.Log("endX : " + endX + ", endY : " + endY); 
+            #endregion
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            #region Troop start going
             Vector3Int troopPos = grid.WorldToCell(troops.transform.position);
             startX = troopPos.x;
             startY = troopPos.z;
@@ -92,24 +100,14 @@ public class GridManager : MonoBehaviour
             List<PathNod> path = pathFinding.FindPath(startX, startY, endX, endY);
             if (path != null)
             {
-                troops.MoveToPositions(NodeToV3(path));
+                troops.MoveToPositions(path);
             }
             else
             {
                 Debug.Log("NO PATH CAN FIND");
-            }
+            } 
+            #endregion
         }
-    }
-
-    List<Vector3> NodeToV3(List<PathNod> pathNode)
-    {
-        List<Vector3> vector3s = new();
-        for (int i = 0; i < pathNode.Count; i++)
-        {
-            vector3s.Add(new(pathNode[i].x, 1f, pathNode[i].y));
-        }
-
-        return vector3s;
     }
 
     private void FixedUpdate()
@@ -131,7 +129,7 @@ public class GridManager : MonoBehaviour
 
         bottomLeftLocation = new((int)grid.transform.localScale.x * -5, (int)grid.transform.localScale.y * -5, (int)grid.transform.localScale.z * -5);
 
-        //SetUpCloud();
+        SetUpCloud();
 
         pathFinding = new(bottomLeftLocation);
     }
@@ -145,12 +143,13 @@ public class GridManager : MonoBehaviour
             {
                 Vector3Int tmpPos = new((int)tempPos.x + i, 1, (int)tempPos.z + j);
 
-                int tempID = furnitureData.listFurniture.FindIndex(f => f.Name == "Clound");
-                Furniture fur = furnitureData.listFurniture[tempID];
 
-                GameObject gameObject_Cloud = Instantiate(fur.Prefab, tmpPos, Quaternion.identity);
-                gameObject_Cloud.name = tmpPos.x + "_" + tmpPos.z;
-                gameObject_Cloud.transform.parent = clounHolder.transform;
+                //  Spawn object
+                //int tempID = furnitureData.listFurniture.FindIndex(f => f.Name == "Clound");
+                //Furniture fur = furnitureData.listFurniture[tempID];
+                //GameObject gameObject_Cloud = Instantiate(fur.Prefab, tmpPos, Quaternion.identity);
+                //gameObject_Cloud.name = tmpPos.x + "_" + tmpPos.z;
+                //gameObject_Cloud.transform.parent = clounHolder.transform;
                 //cloudGridData.AddObjectAt(tmpPos, fur);
 
             }
@@ -179,7 +178,7 @@ public class GridManager : MonoBehaviour
 
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
-            cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected, pathFinding);            
+            //cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected, pathFinding);            
         }
         else
         {

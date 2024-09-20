@@ -43,7 +43,7 @@ public class PathFinding
     public List<PathNod> FindPath(int startX = 0, int startY = 0, int endX = 1, int endY = 1)
     {
         Debug.Log(" __________ Start finding . . .");
-        Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
+        //Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
 
         ResetNodes();
 

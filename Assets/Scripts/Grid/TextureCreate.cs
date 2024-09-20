@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,10 +16,12 @@ public class TextureCreate : MonoBehaviour
     Texture2D fogAlphaTexture;
 
     int size = 0;
+    int offset = 0;
 
     private void Start()
     {
         size = gridManager.bottomLeftLocation.x * -2;
+        offset = Mathf.Abs(gridManager.bottomLeftLocation.x);
         fogMatrix = new bool[size, size];
 
         GenerateTexture();
@@ -26,10 +30,11 @@ public class TextureCreate : MonoBehaviour
     private void GenerateTexture()
     {
         Debug.Log("Size: " + (size));
-        fogAlphaTexture = new Texture2D(size, size, TextureFormat.RGBA32, false);
-
-        fogAlphaTexture.filterMode = FilterMode.Point;       // No smoothing, pixel-perfect
-        fogAlphaTexture.wrapMode = TextureWrapMode.Clamp;    // No texture wrapping
+        fogAlphaTexture = new Texture2D(size, size, TextureFormat.RGBA32, false)
+        {
+            filterMode = FilterMode.Point,       // No smoothing, pixel-perfect
+            wrapMode = TextureWrapMode.Clamp    // No texture wrapping
+        };
 
         for (int row = 0; row < size; row++)
         {
@@ -89,23 +94,18 @@ public class TextureCreate : MonoBehaviour
         // Apply the changes to the texture
         if (hasChanged) fogAlphaTexture.Apply();
     }
-    private void UpdateTexture(int x, int y)
+    public void UpdateTexture(int x, int y)
     {
         Debug.Log(x + " " + y);
         fogAlphaTexture.SetPixel(x, y, Color.clear);
         fogAlphaTexture.Apply();
     }
 
-    //public void UpdateFog(Vector3 position, Vector2Int size)
-    //{
-    //    position.y = 0;
-    //    Vector3Int cell3d = gird.WorldToCell(position); //Have X and Z value 
-    //    Vector2Int newCell = new Vector2Int(cell3d.x, cell3d.z);
-    //    if (currentCell == newCell) return;
-    //    currentCell = newCell;
-    //    UpdateTexture(currentCell, size);
-    //}
-
-    //public void UpdateFog(Vector3 position, int size) => UpdateFog(position, new Vector2Int(size, size));
-
+    internal void OpenCloud(List<PathNod> path)
+    {
+        for (int i = 0; i < path.Count; i++)
+        {
+            UpdateTexture(path[i].x + offset, path[i].y + offset);
+        }
+    }
 }
