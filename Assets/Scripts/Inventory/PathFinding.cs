@@ -25,11 +25,9 @@ public class PathFinding
     void GenerateNodeData()
     {
         listAllNodeGrid = new();
-        int count1 = 0, count2 = 0;
         //  Generate data path node for all grid
         for (int x = bottomLeftLocation.x; x < (bottomLeftLocation.x * -1f); x++)
         {
-            count1++;
             for (int y = bottomLeftLocation.z; y < (bottomLeftLocation.z * -1f); y++)
             {
                 PathNod pathNod = new(x, y);
@@ -38,30 +36,37 @@ public class PathFinding
                 pathNod.cameFromNode = null;
 
                 listAllNodeGrid.Add(pathNod);
-                count2++;
             }
         }
     }
 
     public List<PathNod> FindPath(int startX = 0, int startY = 0, int endX = 1, int endY = 1)
     {
-        //Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
+        Debug.Log(" __________ Start finding . . .");
+        Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
 
-        PathNod startNode = new(startX, startY);
-        PathNod endNode = new(endX, endY);
+        ResetNodes();
+
+        PathNod startNode = GetNode(startX, startY);
+        PathNod endNode = GetNode(endX, endY);
+
+        if (startNode == null || endNode == null || !startNode.isWalkable || !endNode.isWalkable)
+        {
+            Debug.Log("Invalid start or end node");
+            return null;
+        }
 
         openList = new() { startNode };
         closedList = new();
-
 
         startNode.gCost = 0;
         startNode.hCost = CalculateDistance(startNode, endNode);
         startNode.CalculateFcost();
 
-        //int count3 = 0;
+        int count3 = 0;
         while (openList.Count > 0)
         {
-            //count3 += 1;
+            count3 += 1;
             //Debug.Log("         ====== STEP  " + count3);
             PathNod currentNode = GetTheLowestFCostNode(openList);
 
@@ -86,6 +91,7 @@ public class PathFinding
 
                 if (!neiborNode.isWalkable)
                 {
+                    //Debug.Log("neiborNode not isWalkable: " + neiborNode.ToString());
                     closedList.Add(neiborNode);
                     continue;
                 }
@@ -113,6 +119,16 @@ public class PathFinding
         return null;
     }
 
+    void ResetNodes()
+    {
+        foreach (var node in listAllNodeGrid)
+        {
+            node.gCost = int.MaxValue;
+            node.CalculateFcost();
+            node.cameFromNode = null;
+        }
+    }
+
     private List<PathNod> CalculatePath(PathNod endNode)
     {
         List<PathNod> path = new(){ endNode };
@@ -137,86 +153,32 @@ public class PathFinding
 
     private List<PathNod> GetNeighbourList(PathNod currentNode)
     {
-        int tempX = bottomLeftLocation.x,  tempY = bottomLeftLocation.z;
         List<PathNod> neighbourList = new();
 
-        //Debug.Log("Get neibor for: " + currentNode.ToString());
-
-        if (currentNode.x - 1 >= tempX)
+        for (int x = -1; x <= 1; x++)
         {
-            //Debug.Log("left");
-            // Left
-            neighbourList.Add(GetNode(currentNode.x - 1, currentNode.y));
-            // Left Down
-            if (currentNode.y - 1 >= tempY)
+            for (int y = -1; y <= 1; y++)
             {
-                neighbourList.Add(GetNode(currentNode.x - 1, currentNode.y - 1));
-                //Debug.Log("Left Down");
-            }
-            // Left Up
-            if (currentNode.y + 1 < tempY * -1)
-            {
-                neighbourList.Add(GetNode(currentNode.x - 1, currentNode.y + 1));
-                //Debug.Log("Left Up");
+                if (x == 0 && y == 0) continue;
 
+                int checkX = currentNode.x + x;
+                int checkY = currentNode.y + y;
+
+                PathNod neighbourNode = GetNode(checkX, checkY);
+                if (neighbourNode != null && neighbourNode.isWalkable)
+                {
+                    neighbourList.Add(neighbourNode);
+                }
             }
         }
 
-        if (currentNode.x + 1 < tempX *-1)
-        {
-            // Right
-            //Debug.Log("right");
-            neighbourList.Add(GetNode(currentNode.x + 1, currentNode.y));
-            // Right Down
-            if (currentNode.y - 1 >= tempY)
-            {
-                neighbourList.Add(GetNode(currentNode.x + 1, currentNode.y - 1));
-
-                //Debug.Log("Right down");
-            }
-            // Right Up
-            if (currentNode.y + 1 < tempY * -1)
-            {
-                neighbourList.Add(GetNode(currentNode.x + 1, currentNode.y + 1));
-                //Debug.Log("Right up");
-            }
-        }
-
-        // Down
-        if (currentNode.y - 1 >= tempY)
-        {
-            neighbourList.Add(GetNode(currentNode.x, currentNode.y - 1));
-            //Debug.Log("Down");
-        }
-        // Up
-        if (currentNode.y + 1 < tempY * -1)
-        {
-            neighbourList.Add(GetNode(currentNode.x, currentNode.y + 1));
-            //Debug.Log("Up");
-        }
-
-        //Debug.Log("=====Count neibor: " + neighbourList.Count);
-        //foreach (var item in neighbourList)
-        //{
-        //    Debug.Log(item.ToString());
-        //}
         return neighbourList;
     }
 
     internal PathNod GetNode(int x, int y)
     {
-        Debug.Log("listAllNodeGrid: " + listAllNodeGrid.Count);
-        Debug.Log("X: " + x + ", " + y);
         // Get node from grid
         PathNod node = listAllNodeGrid.Find(node => node.x == x && node.y == y);
-        if (node == null)
-        {
-            Debug.Log("Null");
-        }
-        else
-        {
-            Debug.Log("Node: " + node.ToString());
-        }
         return node;
     }
     internal PathNod GetNodeWithOffset(int x, int y)

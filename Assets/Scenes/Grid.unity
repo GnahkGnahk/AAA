@@ -937,7 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a982d2085af0d846aed606cc18f0527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   waypointThreshold: 0.01
 --- !u!1 &1678486103
 GameObject:

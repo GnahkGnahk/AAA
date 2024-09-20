@@ -88,8 +88,16 @@ public class GridManager : MonoBehaviour
             startY = troopPos.z;
 
             Debug.Log("startX : " + startX + ", startY : " + startY);
+
             List<PathNod> path = pathFinding.FindPath(startX, startY, endX, endY);
-            troops.MoveToPositions(NodeToV3(path));
+            if (path != null)
+            {
+                troops.MoveToPositions(NodeToV3(path));
+            }
+            else
+            {
+                Debug.Log("NO PATH CAN FIND");
+            }
         }
     }
 
