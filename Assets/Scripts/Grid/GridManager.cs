@@ -143,7 +143,7 @@ public class GridManager : MonoBehaviour
                 GameObject gameObject_Cloud = Instantiate(fur.Prefab, tmpPos, Quaternion.identity);
                 gameObject_Cloud.name = tmpPos.x + "_" + tmpPos.z;
                 gameObject_Cloud.transform.parent = clounHolder.transform;
-                cloudGridData.AddObjectAt(tmpPos, fur);
+                //cloudGridData.AddObjectAt(tmpPos, fur);
 
             }
         }
@@ -171,11 +171,11 @@ public class GridManager : MonoBehaviour
 
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
-            cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected);            
+            cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected, pathFinding);            
         }
         else
         {
-            if (furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected))
+            if (furnitureGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected, pathFinding))
             {
                 // Success place object
                 //float distance = Vector3.Distance(currentCellPosition, bottomLeftLocation);   

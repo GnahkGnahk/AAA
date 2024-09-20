@@ -8,6 +8,7 @@ public class PathFinding
     const int MOVE_DIAGONAL_COST = 14;
 
     Vector3Int bottomLeftLocation;
+    int offset = 0;
 
     List<PathNod> openList;
     List<PathNod> closedList;
@@ -16,20 +17,14 @@ public class PathFinding
     public PathFinding(Vector3Int bottomLeftLocation)
     {
         this.bottomLeftLocation = bottomLeftLocation;
+        offset = Mathf.Abs(bottomLeftLocation.x);
+
+        GenerateNodeData();
     }
 
-
-    public List<PathNod> FindPath(int startX = 0, int startY = 0, int endX = 1, int endY = 1)
+    void GenerateNodeData()
     {
-        //Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
-
-        PathNod startNode = new(startX, startY);
-        PathNod endNode = new(endX, endY);
-
-        openList = new() { startNode };
-        closedList = new();
         listAllNodeGrid = new();
-
         int count1 = 0, count2 = 0;
         //  Generate data path node for all grid
         for (int x = bottomLeftLocation.x; x < (bottomLeftLocation.x * -1f); x++)
@@ -46,6 +41,18 @@ public class PathFinding
                 count2++;
             }
         }
+    }
+
+    public List<PathNod> FindPath(int startX = 0, int startY = 0, int endX = 1, int endY = 1)
+    {
+        //Debug.Log(startX + " , " + startY + " , " + endX + " , " + endY);
+
+        PathNod startNode = new(startX, startY);
+        PathNod endNode = new(endX, endY);
+
+        openList = new() { startNode };
+        closedList = new();
+
 
         startNode.gCost = 0;
         startNode.hCost = CalculateDistance(startNode, endNode);
@@ -196,11 +203,25 @@ public class PathFinding
         return neighbourList;
     }
 
-    private PathNod GetNode(int x, int y)
+    internal PathNod GetNode(int x, int y)
     {
+        Debug.Log("listAllNodeGrid: " + listAllNodeGrid.Count);
+        Debug.Log("X: " + x + ", " + y);
         // Get node from grid
         PathNod node = listAllNodeGrid.Find(node => node.x == x && node.y == y);
+        if (node == null)
+        {
+            Debug.Log("Null");
+        }
+        else
+        {
+            Debug.Log("Node: " + node.ToString());
+        }
         return node;
+    }
+    internal PathNod GetNodeWithOffset(int x, int y)
+    {
+        return GetNode(x + offset, y + offset);
     }
 
     private PathNod GetTheLowestFCostNode(List<PathNod> list)

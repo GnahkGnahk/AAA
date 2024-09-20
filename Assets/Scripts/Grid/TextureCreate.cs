@@ -48,16 +48,12 @@ public class TextureCreate : MonoBehaviour
 
     void ImportTextureAsset(Texture2D texture)
     {
-        // Mã hóa texture thành byte array d??i ??nh d?ng PNG
         byte[] bytes = texture.EncodeToPNG();
 
-        // Xác ??nh ???ng d?n ??n n?i l?u file PNG
         string filepath = Path.Combine(Application.dataPath, "Shaders/CreateTexture/texture1.png");
 
-        // Ghi file PNG ra ??a
         File.WriteAllBytes(filepath, bytes);
 
-        // Thêm texture m?i vào Asset Database c?a Unity
         AssetDatabase.ImportAsset("Assets/Shaders/CreateTexture/texture1.png");
     }
 

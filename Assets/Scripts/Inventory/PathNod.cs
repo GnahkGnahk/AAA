@@ -15,16 +15,21 @@ public class PathNod
 
     public PathNod cameFromNode;
 
-    public PathNod(int x, int y, bool isWalkTable = true)
+    public PathNod(int x, int y)
     {
         this.x = x;
         this.y = y;
-        this.isWalkable = isWalkTable;
+        this.isWalkable = true;
     }
 
     internal void CalculateFcost()
     {
         fCost = gCost + hCost;
+    }
+
+    internal void SetWalkable(bool isWalkable)
+    {
+        this.isWalkable = isWalkable;
     }
 
 

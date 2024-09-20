@@ -8,7 +8,7 @@ public class GridData
 {
     Dictionary<Vector3Int, PlacementData> cellPlacedData = new();
 
-    public bool AddObjectAt(Vector3Int gridPosition, Furniture furniture, int index = 0)
+    public bool AddObjectAt(Vector3Int gridPosition, Furniture furniture, PathFinding pathFinding)
     {
         bool isCanPutItemOnSeft = furniture.CanPutItemOnSeft;
 
@@ -18,7 +18,7 @@ public class GridData
 
         if (!temp)
         {
-            return false; 
+            return false;   // guess this will never happend
         }
 
         PlacementData placementData;
@@ -26,17 +26,20 @@ public class GridData
         //Debug.Log("count = " + occupiedPosition.Count);
         foreach (var position in occupiedPosition)
         {
-            //Debug.Log("cell(x:y) = " + position);
+            Debug.Log("cell(x:y) = " + position);
             if (cellPlacedData.ContainsKey(position) && !isCanPutItemOnSeft)
             {
                 throw new Exception($"This ({position}) cell is occupied");     // guess this will never happend
             }
             else
             {
-                placementData = new(occupiedPosition, furniture, index);
+                placementData = new(occupiedPosition, furniture);
 
                 cellPlacedData[position] = placementData;
-                //Debug.Log("Add cell done"); //  not log ?
+                //Debug.Log("Add cell done");
+
+                pathFinding.GetNode(position.x, position.z).SetWalkable(false);
+
             }
         }
 
@@ -76,12 +79,12 @@ internal class PlacementData
     public List<Vector3Int> occupiedCell;
 
     public Furniture FurnitureData { get; private set; }
-    public int PlacedObjIndex { get; private set; }
+    //public int PlacedObjIndex { get; private set; }
 
-    public PlacementData(List<Vector3Int> occupiedCell, Furniture furniture, int placedObjIndex)
+    public PlacementData(List<Vector3Int> occupiedCell, Furniture furniture/*, int placedObjIndex*/)
     {
         this.occupiedCell = occupiedCell;
         FurnitureData = furniture;
-        PlacedObjIndex = placedObjIndex;
+        //PlacedObjIndex = placedObjIndex;
     }
 }
