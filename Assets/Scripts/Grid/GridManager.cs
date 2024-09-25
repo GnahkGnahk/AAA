@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +9,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Grid grid;
     [SerializeField] Mouse3D mousePointer;
-    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder, clounHolder;
+    [SerializeField] Transform visualPointer, btnHolder, furnitureHolder;
     [SerializeField] FurnitureSO furnitureData;
     [SerializeField] FurnitureButton selectFurnitureBtnPrefab;
     [SerializeField] Vector2 spawnAmount;
@@ -23,7 +24,7 @@ public class GridManager : MonoBehaviour
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
 
     Furniture currentFurnitureSelected = null;
-    Vector3Int currentCellPosition;
+    internal Vector3Int currentCellPosition;
     int currentFurnitureID = -1;
 
     GridData cloudGridData, furnitureGridData;
@@ -34,6 +35,8 @@ public class GridManager : MonoBehaviour
     PathFinding pathFinding;
     int startX, startY, endX, endY;
     int offset = 0;
+
+    BaseArchitecture dragAndDropItem = null;
 
     private void Update()
     {
@@ -110,6 +113,12 @@ public class GridManager : MonoBehaviour
             } 
             #endregion
         }
+
+        if (dragAndDropItem)
+        {
+            Debug.Log("Dragging");
+            dragAndDropItem.transform.position = currentCellPosition;
+        }
     }
 
     private void FixedUpdate()
@@ -182,6 +191,16 @@ public class GridManager : MonoBehaviour
         GameObject furniture = Instantiate(furnitureData.listFurniture[currentFurnitureID].Prefab, furnitureHolder);
         furniture.transform.position = currentCellPosition;
 
+        if (furniture.TryGetComponent<BaseArchitecture>(out var dragDrop))
+        {
+            Debug.Log("FOUND");
+            dragDrop.SetupData(this);
+        }
+        else
+        {
+            Debug.Log("NULL");
+        }
+
         if (currentFurnitureSelected.CanPutItemOnSeft)
         {
             //cloudGridData.AddObjectAt(currentCellPosition, currentFurnitureSelected, pathFinding);            
@@ -205,6 +224,7 @@ public class GridManager : MonoBehaviour
 
     public void SetScaleVisualPointer(Furniture furniture, Material material)
     {
+        //
         visualPointer.gameObject.SetActive(true);
         float newScale_x = furniture.Size.x;
         float newScale_z = furniture.Size.y;
@@ -213,5 +233,43 @@ public class GridManager : MonoBehaviour
         visualPointer.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = material;
 
         currentFurnitureSelected = furniture;
+    }
+
+    public void SetDragItem(PointerEventData eventData)
+    {
+        // Assume we have a way to get the BaseArchitecture item from the event data
+        BaseArchitecture item = GetItemFromEventData(eventData);
+        dragAndDropItem = item;
+    }
+
+    public void ReleaseDragItem()
+    {
+        dragAndDropItem = null;
+    }
+    private BaseArchitecture GetItemFromEventData(PointerEventData eventData)
+    {
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            BaseArchitecture clickedItem = eventData.pointerCurrentRaycast.gameObject.GetComponent<BaseArchitecture>();
+            if (clickedItem != null)
+            {
+                return clickedItem;
+            }
+        }
+
+        // If the clicked object itself isn't a BaseArchitecture, check its parent
+        GameObject clickedObject = eventData.pointerCurrentRaycast.gameObject;
+        if (clickedObject != null)
+        {
+            BaseArchitecture parentItem = clickedObject.GetComponentInParent<BaseArchitecture>();
+            if (parentItem != null)
+            {
+                return parentItem;
+            }
+        }
+
+        // If no BaseArchitecture found, return null
+        Debug.Log("No BaseArchitecture item found");
+        return null;
     }
 }

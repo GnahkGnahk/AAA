@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952116931757120884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952116932687260560}
   - component: {fileID: 2663288530998536133}
+  - component: {fileID: 4219093191566827700}
   m_Layer: 0
   m_Name: 1x1_Fench
   m_TagString: Untagged
@@ -123,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952116932687260563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.385, y: 0, z: 0.191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -146,6 +147,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupOverview: {fileID: 7736143740682730254}
+  gridManager: {fileID: 0}
+  eventTrigger: {fileID: 0}
+--- !u!114 &4219093191566827700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952116932687260563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &6931798436658981828
 GameObject:
   m_ObjectHideFlags: 0

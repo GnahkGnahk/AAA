@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952116932687260560}
   - component: {fileID: 2738429139063784918}
+  - component: {fileID: 1743434603252480952}
   m_Layer: 0
   m_Name: 2x2_Tree
   m_TagString: Untagged
@@ -146,6 +147,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupOverview: {fileID: 2454807900280840315}
+--- !u!114 &1743434603252480952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952116932687260563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee3ebe172fcc2344b4094b44c0aa111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1246099277158249266
 GameObject:
   m_ObjectHideFlags: 0

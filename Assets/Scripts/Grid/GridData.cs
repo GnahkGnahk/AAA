@@ -26,7 +26,7 @@ public class GridData
         //Debug.Log("count = " + occupiedPosition.Count);
         foreach (var position in occupiedPosition)
         {
-            Debug.Log("cell(x:y) = " + position);
+            //Debug.Log("cell(x:y) = " + position);
             if (cellPlacedData.ContainsKey(position) && !isCanPutItemOnSeft)
             {
                 throw new Exception($"This ({position}) cell is occupied");     // guess this will never happend
