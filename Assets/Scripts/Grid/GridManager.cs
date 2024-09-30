@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.Progress;
 
 public class GridManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] MovingTroop troops;
 
     [SerializeField] TextureCreate textureCloundHandling;
+
+    [SerializeField] Material selectedMate;
 
     public event Action<int> OnClick;
     public event Action OnExit;
@@ -36,7 +39,7 @@ public class GridManager : MonoBehaviour
     int startX, startY, endX, endY;
     int offset = 0;
 
-    BaseArchitecture dragAndDropItem = null;
+    BaseArchitecture currentArchitecture = null;
 
     private void Update()
     {
@@ -74,13 +77,24 @@ public class GridManager : MonoBehaviour
             {
                 //Debug.Log("Invoke click");
                 OnClick.Invoke(currentFurnitureID);
-            } 
+            }
+            #endregion
+
+            #region Cancel selected Furniture
+            if (currentArchitecture && grid.WorldToCell(currentArchitecture.transform.position) != currentCellPosition)
+            {
+                ReleaseDragItem();
+            }
             #endregion
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //  Cancel place object
             OnExit.Invoke();
+            if (currentArchitecture)
+            {
+                ReleaseDragItem();
+            }
         }
 
 
@@ -114,11 +128,6 @@ public class GridManager : MonoBehaviour
             #endregion
         }
 
-        if (dragAndDropItem)
-        {
-            Debug.Log("Dragging");
-            dragAndDropItem.transform.position = currentCellPosition;
-        }
     }
 
     private void FixedUpdate()
@@ -194,7 +203,7 @@ public class GridManager : MonoBehaviour
         if (furniture.TryGetComponent<BaseArchitecture>(out var dragDrop))
         {
             Debug.Log("FOUND");
-            dragDrop.SetupData(this);
+            dragDrop.Initialize(this, furnitureData.listFurniture[currentFurnitureID]);
         }
         else
         {
@@ -234,42 +243,38 @@ public class GridManager : MonoBehaviour
 
         currentFurnitureSelected = furniture;
     }
-
-    public void SetDragItem(PointerEventData eventData)
+    public void SetScaleVisualPointer(Vector2 scaleSize = default)
     {
-        // Assume we have a way to get the BaseArchitecture item from the event data
-        BaseArchitecture item = GetItemFromEventData(eventData);
-        dragAndDropItem = item;
+        //
+        float newScale_x = scaleSize.x;
+        float newScale_z = scaleSize.y;
+        currentArchitecture.LandVisual.transform.localScale = new Vector3(newScale_x, 1f, newScale_z);
+
+        currentArchitecture.LandVisual.GetComponent<MeshRenderer>().material = selectedMate;
+    }
+
+    public void SetDragItem(BaseArchitecture item)
+    {
+        if (currentArchitecture != null)
+        {
+            ReleaseDragItem();
+        }
+
+        item.ShowLandVisual();
+        currentArchitecture = item;
+        item.DragAndDrop.canDrag = true;
+        SetScaleVisualPointer(item.furniture.Size);
     }
 
     public void ReleaseDragItem()
     {
-        dragAndDropItem = null;
-    }
-    private BaseArchitecture GetItemFromEventData(PointerEventData eventData)
-    {
-        if (eventData.pointerCurrentRaycast.gameObject != null)
-        {
-            BaseArchitecture clickedItem = eventData.pointerCurrentRaycast.gameObject.GetComponent<BaseArchitecture>();
-            if (clickedItem != null)
-            {
-                return clickedItem;
-            }
-        }
+        currentArchitecture.DragAndDrop.canDrag = false;
+        currentArchitecture.ShowLandVisual(false);
 
-        // If the clicked object itself isn't a BaseArchitecture, check its parent
-        GameObject clickedObject = eventData.pointerCurrentRaycast.gameObject;
-        if (clickedObject != null)
-        {
-            BaseArchitecture parentItem = clickedObject.GetComponentInParent<BaseArchitecture>();
-            if (parentItem != null)
-            {
-                return parentItem;
-            }
-        }
+        #region Check new position is valid
 
-        // If no BaseArchitecture found, return null
-        Debug.Log("No BaseArchitecture item found");
-        return null;
+        #endregion
+
+        currentArchitecture = null;
     }
 }

@@ -5,6 +5,7 @@ public class Mouse3D : MonoBehaviour
     [SerializeField] Camera _camera;
     [SerializeField] LayerMask _layerMask;
     [SerializeField] bool isSpecificLayerMask;
+    [SerializeField] GameObject visual;
 
 
     public void RayCastPointer()
@@ -27,5 +28,13 @@ public class Mouse3D : MonoBehaviour
         {
             transform.position = hitInfo.point;
         }
+    }
+
+
+
+    public void SetupVisual(Vector3 position = default, bool isActive = true)
+    {
+        transform.position = position;
+        visual.SetActive(isActive);
     }
 }

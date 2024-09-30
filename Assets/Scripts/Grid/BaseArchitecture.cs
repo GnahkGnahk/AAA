@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,7 +8,10 @@ public class BaseArchitecture : MonoBehaviour
 {
     [SerializeField] ItemPopupInWorld popupOverview;
     [SerializeField] GridManager gridManager;
-    [SerializeField] EventTrigger eventTrigger;
+    [SerializeField] DragAndDrop dragAndDrop;
+    [SerializeField] GameObject landVisual;
+
+    public Furniture furniture = null;
 
     internal virtual void ActivePopupInWorld(Furniture furniture, bool active = true)
     {
@@ -24,34 +28,19 @@ public class BaseArchitecture : MonoBehaviour
         furniture.Level += 1;
         furniture.Hp += UnityEngine.Random.Range(1.0f, 10.0f);
     }
-
-    public void SetupData(GridManager gridManager)
+    public void Initialize(GridManager gridManager, Furniture furniture)
     {
         Debug.Log("SetupData");
         this.gridManager = gridManager;
-        eventTrigger = gameObject.GetComponent<EventTrigger>();
-
-        if (eventTrigger)
-        {
-            Debug.Log("eventTrigger set up");
-
-            EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry();
-            pointerDownEntry.eventID = EventTriggerType.PointerDown;
-            pointerDownEntry.callback.AddListener((data) => { gridManager.SetDragItem((PointerEventData)data); });
-            eventTrigger.triggers.Add(pointerDownEntry);
-
-            // Set up Pointer Up event
-            EventTrigger.Entry pointerUpEntry = new EventTrigger.Entry();
-            pointerUpEntry.eventID = EventTriggerType.PointerUp;
-            pointerUpEntry.callback.AddListener((data) => { gridManager.ReleaseDragItem(); });
-            eventTrigger.triggers.Add(pointerUpEntry);
-
-        }
-        else
-        {
-            Debug.Log("eventTrigger NULL");
-        }
+        dragAndDrop.Setup(this);
+        this.furniture = furniture;
     }
+
+    internal void ShowLandVisual(bool isShow = true) => landVisual.SetActive(isShow);
+
+    public GridManager GridManager => gridManager;
+    public DragAndDrop DragAndDrop => dragAndDrop;
+    public GameObject LandVisual => landVisual;
 }
 
 [Serializable]

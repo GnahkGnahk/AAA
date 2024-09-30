@@ -5,22 +5,35 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
+    [SerializeField] BaseArchitecture baseArchitecture;
 
-    //private void OnMouseDown()
-    //{
-    //    Debug.Log("OnMouseDown");
-    //    //gridManager.currentCellPosition
-    //}
+    internal bool canDrag = false;
+    private Vector3 initialMousePosition;
 
-    //private void OnMouseDrag()
-    //{
-    //    Debug.Log("OnMouseDrag");
-    //    transform.position = gridManager.currentCellPosition;
-    //}
-
-    public void Setup(GridManager gridManager)
+    private void OnMouseDown()
     {
-        this.gridManager = gridManager;
+        initialMousePosition = Input.mousePosition;
+    }
+
+    private void OnMouseDrag()
+    {
+        if (canDrag)
+        {
+            transform.position = gridManager.currentCellPosition;
+        }
+    }
+
+    private void OnMouseUp()
+    {
+        if (initialMousePosition != Input.mousePosition) return;
+
+        gridManager.SetDragItem(baseArchitecture);
+    }
+
+    public void Setup(BaseArchitecture baseArchitecture)
+    {
+        this.baseArchitecture = baseArchitecture;
+        gridManager = baseArchitecture.GridManager;
     }
 
 

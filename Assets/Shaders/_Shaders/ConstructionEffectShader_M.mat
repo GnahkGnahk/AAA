@@ -44,7 +44,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _HeadThickness: 0.01
-    - _Progress: 1
+    - _Progress: 0.57
     - _Segments: 1000
     m_Colors:
     - _HeadColor: {r: 2.828427, g: 2.6359165, b: 0, a: 0}

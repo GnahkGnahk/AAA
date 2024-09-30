@@ -291,6 +291,7 @@ MonoBehaviour:
   visionAtStart: 5
   troops: {fileID: 1536704654}
   textureCloundHandling: {fileID: 1770864755}
+  selectedMate: {fileID: 2100000, guid: fc096ab353ad1944997f508975420e3a, type: 2}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
