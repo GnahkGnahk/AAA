@@ -46,10 +46,11 @@ public class GridData
         return true;
     }
 
-    public bool CalculateoccupiedGrid(Vector3Int gridOffsetPosition, Furniture furniture, out List<Vector3Int> returnList)
+    public bool CalculateoccupiedGrid(Vector3Int gridOffsetPosition, Furniture furniture, out List<Vector3Int> returnList, bool showLog = false)
     {
         //  1. Check if cell is occupied return false else true and calculate (2)
         //  2. Calculate cell need to occupied
+        bool rs = true;
 
         returnList = new List<Vector3Int>();
 
@@ -58,35 +59,41 @@ public class GridData
             for (int y = 0; y < furniture.Size.y; y++)
             {
                 Vector3Int cell = gridOffsetPosition + new Vector3Int(x, 0, y);
+
+                if(showLog) Debug.Log("cell: " + cell + ". " +cellPlacedData.ContainsKey(cell) + "/ " + furniture.CanPutItemOnSeft);
                 if (cellPlacedData.ContainsKey(cell) && !furniture.CanPutItemOnSeft)
                 {
-                    //Debug.Log("Calculate : false");
-                    returnList.Clear();
-                    return false;
+                    if (showLog) Debug.Log("Calculate : false");
+                    rs = false;
                 }
                 returnList.Add(cell);
             }
         }
-        //Debug.Log("Calculate : true");
-        return true;
+        if (showLog) Debug.Log("Calculate list: " + returnList.Count);
+        return rs;
     }
 
-    public void RemoveObjectAt(List<Vector3Int> occupiedPosition, PathFinding pathFinding)
+    public void RemoveObjectAt(Vector3Int position, Furniture furniture, PathFinding pathFinding)
     {
         // Assume cellPlacedData and occupiedPosition are populated
-        Debug.Log("occupiedPosition: " + occupiedPosition.Count)
+        Debug.Log("RemoveObjectAt: " + position);
 
+
+        List<Vector3Int> listCellNeedToRemove = new();
+        CalculateoccupiedGrid(position, furniture, out listCellNeedToRemove, true);
+
+        Debug.Log("listCellNeedToRemove: " + listCellNeedToRemove.Count);
         // Remove key-value pairs based on occupiedPosition list
-        foreach (var position in occupiedPosition)
+        foreach (var cellPos in listCellNeedToRemove)
         {
-            if (cellPlacedData.ContainsKey(position))
+            if (cellPlacedData.ContainsKey(cellPos))
             {
-                Debug.Log("Removing: " + position);
+                Debug.Log("Removing: " + cellPos);
                 // Remove the key-value pair
-                cellPlacedData.Remove(position);
+                cellPlacedData.Remove(cellPos);
 
                 // If you're using pathFinding, you might want to set the node back to walkable
-                pathFinding.GetNode(position.x, position.z).SetWalkable(true);
+                pathFinding.GetNode(cellPos.x, cellPos.z).SetWalkable(true);
             }
         }
 

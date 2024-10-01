@@ -286,11 +286,11 @@ public class GridManager : MonoBehaviour
         if (furnitureGridData.CalculateoccupiedGrid(
                     newPositionArchitect,
                     currentArchitecture.furniture,
-                    out List<Vector3Int> returnList)
+                    out _)
         )   //  Valid : place at new pos
         {
             Debug.Log("Valid");
-            furnitureGridData.RemoveObjectAt(returnList, pathFinding);
+            furnitureGridData.RemoveObjectAt(oldPositionArchitect, currentArchitecture.furniture, pathFinding);
             furnitureGridData.AddObjectAt(newPositionArchitect, currentArchitecture.furniture, pathFinding);
         }
         else    //  Invalid : return old pos
