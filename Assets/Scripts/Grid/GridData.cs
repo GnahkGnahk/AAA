@@ -71,7 +71,31 @@ public class GridData
         return true;
     }
 
+    public void RemoveObjectAt(List<Vector3Int> occupiedPosition, PathFinding pathFinding)
+    {
+        // Assume cellPlacedData and occupiedPosition are populated
+        Debug.Log("occupiedPosition: " + occupiedPosition.Count)
 
+        // Remove key-value pairs based on occupiedPosition list
+        foreach (var position in occupiedPosition)
+        {
+            if (cellPlacedData.ContainsKey(position))
+            {
+                Debug.Log("Removing: " + position);
+                // Remove the key-value pair
+                cellPlacedData.Remove(position);
+
+                // If you're using pathFinding, you might want to set the node back to walkable
+                pathFinding.GetNode(position.x, position.z).SetWalkable(true);
+            }
+        }
+
+        // Optional: Print the remaining items in cellPlacedData
+        //foreach (var kvp in cellPlacedData)
+        //{
+        //    Debug.Log($"Remaining position: {kvp.Key}, Data: {kvp.Value}");
+        //}
+    }
 }
 
 internal class PlacementData

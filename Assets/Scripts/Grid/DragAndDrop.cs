@@ -19,7 +19,7 @@ public class DragAndDrop : MonoBehaviour
     {
         if (canDrag)
         {
-            transform.position = gridManager.currentCellPosition;
+            transform.position = gridManager.NewPositionArchitect();
         }
     }
 
@@ -27,7 +27,10 @@ public class DragAndDrop : MonoBehaviour
     {
         if (initialMousePosition != Input.mousePosition) return;
 
-        gridManager.SetDragItem(baseArchitecture);
+        if (!canDrag)
+        {
+            gridManager.SetDragItem(baseArchitecture);
+        }
     }
 
     public void Setup(BaseArchitecture baseArchitecture)

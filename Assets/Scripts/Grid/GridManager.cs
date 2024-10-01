@@ -40,6 +40,8 @@ public class GridManager : MonoBehaviour
     int offset = 0;
 
     BaseArchitecture currentArchitecture = null;
+    Vector3Int oldPositionArchitect = Vector3Int.zero;
+    Vector3Int newPositionArchitect = Vector3Int.zero;
 
     private void Update()
     {
@@ -202,7 +204,6 @@ public class GridManager : MonoBehaviour
 
         if (furniture.TryGetComponent<BaseArchitecture>(out var dragDrop))
         {
-            Debug.Log("FOUND");
             dragDrop.Initialize(this, furnitureData.listFurniture[currentFurnitureID]);
         }
         else
@@ -264,6 +265,8 @@ public class GridManager : MonoBehaviour
         currentArchitecture = item;
         item.DragAndDrop.canDrag = true;
         SetScaleVisualPointer(item.furniture.Size);
+
+        oldPositionArchitect = grid.WorldToCell(item.transform.position);
     }
 
     public void ReleaseDragItem()
@@ -271,10 +274,31 @@ public class GridManager : MonoBehaviour
         currentArchitecture.DragAndDrop.canDrag = false;
         currentArchitecture.ShowLandVisual(false);
 
-        #region Check new position is valid
-
-        #endregion
+        HandlingNewPos();
 
         currentArchitecture = null;
+    }
+    public Vector3Int NewPositionArchitect() => newPositionArchitect = currentCellPosition;
+    public void HandlingNewPos()
+    {
+        Debug.Log("HandlingNewPos: " + newPositionArchitect);
+        #region Handle with new position
+        if (furnitureGridData.CalculateoccupiedGrid(
+                    newPositionArchitect,
+                    currentArchitecture.furniture,
+                    out List<Vector3Int> returnList)
+        )   //  Valid : place at new pos
+        {
+            Debug.Log("Valid");
+            furnitureGridData.RemoveObjectAt(returnList, pathFinding);
+            furnitureGridData.AddObjectAt(newPositionArchitect, currentArchitecture.furniture, pathFinding);
+        }
+        else    //  Invalid : return old pos
+        {
+            Debug.Log("Invalid");
+            currentArchitecture.transform.position = oldPositionArchitect;
+            newPositionArchitect = Vector3Int.zero;
+        }
+        #endregion
     }
 }

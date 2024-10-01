@@ -30,7 +30,6 @@ public class BaseArchitecture : MonoBehaviour
     }
     public void Initialize(GridManager gridManager, Furniture furniture)
     {
-        Debug.Log("SetupData");
         this.gridManager = gridManager;
         dragAndDrop.Setup(this);
         this.furniture = furniture;
