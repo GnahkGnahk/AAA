@@ -238,6 +238,9 @@ public class PlayerManager : Singleton<PlayerManager>
             isJumping = true;
             if (manitude < 0.1f) isMoving = false;
             p_InputSys_Instance.SetJump(false);
+
+            cameraMN_Instance.SetCameraOn(CameraType.FOCUS_JUMP);
+            Time.timeScale = 0.5f;
         }
     }
 
@@ -357,7 +360,7 @@ public class PlayerManager : Singleton<PlayerManager>
         playerCapsuleCollider.radius = playerRadius_Idle;
         playerCapsuleCollider.center = new Vector3(playerCapsuleCollider.center.x, playerCenter_Y_Idle, playerCapsuleCollider.center.z);
     }
-    void AdjustPlayerColliderJump() // For jump
+    void AdjustPlayerColliderJump() // Event For jump
     {
         //Debug.Log("AdjustPlayerColliderJump");
         playerCapsuleCollider.height = playerHeight_Jump;
@@ -388,6 +391,9 @@ public class PlayerManager : Singleton<PlayerManager>
         Debug.Log("Jump Done");
         isJumping = false;
         p_InputSys_Instance.SetJump(true);
+
+        cameraMN_Instance.SetCameraOn(CameraType.FOCUS_JUMP, false);
+        Time.timeScale = 1.0f;
     }
     void PickUpDone()
     {

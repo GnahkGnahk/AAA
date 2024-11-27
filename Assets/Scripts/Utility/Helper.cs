@@ -42,4 +42,5 @@ public enum CameraType
 {
     TOP_DOWN,
     CROUCHING,
+    FOCUS_JUMP,
 }

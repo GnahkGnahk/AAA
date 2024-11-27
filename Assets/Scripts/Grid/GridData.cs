@@ -107,6 +107,7 @@ public class GridData
 
 internal class PlacementData
 {
+    public int ID { get; set; }
     public List<Vector3Int> occupiedCell;
 
     public Furniture FurnitureData { get; private set; }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CameraManager : Singleton<CameraManager>
 {
-    [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching;
+    [SerializeField] CinemachineVirtualCamera CM_TopDown, CM_Crouching, CM_FocusJump;
     [SerializeField] GameObject miniCamera;
 
     private void Start()
@@ -16,7 +16,8 @@ public class CameraManager : Singleton<CameraManager>
     public void SetCameraOn(CameraType cam, bool isActive = true)
     {
         CinemachineVirtualCamera tempCam = cam == CameraType.TOP_DOWN ? CM_TopDown :
-                                            cam == CameraType.CROUCHING ? CM_Crouching : null;
+                                            cam == CameraType.CROUCHING ? CM_Crouching :
+                                            cam == CameraType.FOCUS_JUMP ? CM_FocusJump : null;
 
         tempCam.Priority = isActive ? 99 : 1;
     }
